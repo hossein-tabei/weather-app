@@ -1,0 +1,16 @@
+<mat-card class="example-card h-100">
+  <div class="px-5 my-5 w-100">
+    <mat-card-header>
+      <mat-card-title>Air Quality Index</mat-card-title>
+      <mat-card-subtitle>{{airQualityIndex.publicationInfo}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class=" mb-0">
+        <h1 class="d-inline-block">{{airQualityIndex.numericlevel}}</h1>
+        <p class="d-inline-block">{{airQualityIndex.verbalLevel}}</p>
+      </div>
+      <p>{{airQualityIndex.description}}</p>
+      <app-air-elements [polutionIndexes]="airQualityIndex.polutionIndexes"></app-air-elements>
+    </mat-card-content>
+  </div>
+</mat-card>

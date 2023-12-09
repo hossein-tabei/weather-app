@@ -1,0 +1,32 @@
+<div class="row align-items-center justify-content-center w-100">
+  <!-- search icon -->
+  <span class="col-auto">
+    <mat-icon>search</mat-icon>
+  </span>
+
+  <!-- auto complete -->
+  <span class="col-3">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Search location</mat-label>
+        <input matInput
+              type="search"
+              aria-label="city"
+              [matAutocomplete]="auto"
+              [formControl]="fcLocation"
+              (focus)="onInputFocus()">
+        <mat-autocomplete #auto (optionSelected)="onSelectedOption($event.option.value)"
+        [hideSingleSelectionIndicator]="false">
+          @for (location of filteredLocations | async; track location) {
+            <mat-option [value]="location">
+              <span>{{location.city}}</span>,
+              <small>{{location.state}}</small>,
+              <small>{{location.country}}</small>
+            </mat-option>
+          }
+        </mat-autocomplete>
+      </mat-form-field>
+    </form>
+  </span>
+
+</div>

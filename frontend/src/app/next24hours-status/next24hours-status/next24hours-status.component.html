@@ -1,0 +1,7 @@
+<mat-card class="h-100">
+  <div class="my-1 px-4 overflow-x-scroll text-nowrap">
+    @for(hourStatus of next24HoursStatuses; track hourStatus) {
+      <app-next24hours-cell [hourStatus]="hourStatus" class="w-8em d-inline-block"></app-next24hours-cell>
+    }
+  </div>
+</mat-card>

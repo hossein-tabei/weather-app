@@ -1,0 +1,13 @@
+<div class="example-card h-100">
+  <div class="mx-0 my-5 w-100">
+    <div class="text-center">
+      <span class="line-height-2">{{dayStatus.dayOfWeek}}</span><br>
+      <span class="line-height-2">{{dayStatus.date}}</span><br>
+      <span class="line-height-2"><mat-icon>{{getIconSymbol(dayStatus.maxStatus)}}</mat-icon></span><br>
+      <span class="line-height-2"><mat-icon class="w-1-em">arrow_upward_alt</mat-icon> {{dayStatus.maxTemp}} °C</span><br>
+      <span class="line-height-2"><mat-icon class="w-1-em">arrow_downward_alt</mat-icon> {{dayStatus.minTemp}} °C</span><br>
+      <span class="line-height-2"><mat-icon>{{getIconSymbol(dayStatus.minStatus)}}</mat-icon></span><br>
+      <span class="line-height-2">{{dayStatus.windSpeed}} km/h</span><br>
+    </div>
+  </div>
+</div>
