@@ -29,7 +29,7 @@ Back-end:
 
 ### Development mode
 Two independent applications with example of proxy settings usage.
-<br>Run ``npm start`` to start the front-end app
+<br>Use ``npm start`` command to run the front-end app.
 
 ### Production mode
 Building the whole application as single JAR file: back-end module depends on front-end one.
