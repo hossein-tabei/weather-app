@@ -1,7 +1,6 @@
 # Weather Forecast Web application : Angular + Spring Boot
 
 This is a repository of weather forecast web application implemented with Spring Boot in back-end side and Angular in front-end side.
-<br>Also the back-end side is implemented in Test-Driven-Development Approach and Unit testing.
 
 Technologies and concepts used in the project are as follows.
 
