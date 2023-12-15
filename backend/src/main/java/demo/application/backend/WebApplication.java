@@ -9,9 +9,6 @@ import org.springframework.core.SpringVersion;
 public class WebApplication {
 
 	public static void main(String[] args) {
-		System.out.println("SpringVersion.getVersion():"+SpringVersion.getVersion());
-		System.out.println("SpringBootVersion.getVersion():"+SpringBootVersion.getVersion());
-		
 		SpringApplication.run(WebApplication.class, args);
 	}
 
