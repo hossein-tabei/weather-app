@@ -12,14 +12,13 @@ import { TodayFacadeService } from '../today-facade.service';
 export class TodayStatusComponent {
 
   protected currentStatus!: CurrentStatus;
+  protected weatherStatus!: WeatherStatusEnum|undefined;
 
   constructor(private todayFacadeService: TodayFacadeService) {
     todayFacadeService.getCurrentStatus().subscribe(currentStatus => {
       this.currentStatus = currentStatus;
+      this.weatherStatus = WeatherStatusEnum.getInstanceBySymbol(currentStatus.status);
     });
   }
 
-  protected getIconSymbol(symbol: string): string|undefined {
-    return WeatherStatusEnum.getInstanceBySymbol(symbol)?.getIconSymbol();
-  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HourStatus } from 'src/app/model/hour-status';
 import { WeatherStatusEnum } from 'src/app/enum/weather-status-enum';
 
@@ -7,12 +7,13 @@ import { WeatherStatusEnum } from 'src/app/enum/weather-status-enum';
   templateUrl: './next24hours-cell.component.html',
   styleUrl: './next24hours-cell.component.scss'
 })
-export class Next24hoursCellComponent {
+export class Next24hoursCellComponent implements OnInit {
 
   @Input() hourStatus!: HourStatus;
+  protected weatherStatus!: WeatherStatusEnum|undefined;
 
-  protected getIconSymbol(symbol: string): string|undefined {
-    return WeatherStatusEnum.getInstanceBySymbol(symbol)?.getIconSymbol();
+  ngOnInit(): void {
+    this.weatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.hourStatus.status);
   }
 
 }

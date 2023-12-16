@@ -1,15 +1,17 @@
 <mat-card class="example-card h-100">
-  <div class="mx-auto my-5 w-50">
-    <mat-card-header>
+  <div class="mx-auto my-5 w-75">
+    <mat-card-header class="mb-2">
       <mat-card-title>{{currentStatus.city}}</mat-card-title>
       <mat-card-subtitle>{{currentStatus.country}}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <div class="row justify-contenet-center align-items-center">
-        <div class="col-2"><mat-icon>{{getIconSymbol(currentStatus.status)}}</mat-icon></div>
-        <h1 class="col-9 mb-0">{{currentStatus.temperature}} °C</h1>
-        <p>{{currentStatus.minTemp}} °C / {{currentStatus.maxTemp}} °C</p>
+      <mat-divider></mat-divider>
+      <div class="row justify-contenet-center align-items-center my-2">
+        <mat-icon [ngClass]="weatherStatus?.getColor()" class="w-auto col-auto w-auto">{{weatherStatus?.getIconSymbol()}}</mat-icon>
+        <h1 class="col-auto mb-0">{{currentStatus.temperature}} °C</h1>
       </div>
+      <mat-divider></mat-divider>
+      <p class="mt-2">{{currentStatus.minTemp}} °C / {{currentStatus.maxTemp}} °C</p>
     </mat-card-content>
   </div>
 </mat-card>

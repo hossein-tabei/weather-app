@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DayStatus } from 'src/app/model/day-status';
 import { WeatherStatusEnum } from 'src/app/enum/weather-status-enum';
 
@@ -7,10 +7,14 @@ import { WeatherStatusEnum } from 'src/app/enum/weather-status-enum';
   templateUrl: './next5days-cell.component.html',
   styleUrl: './next5days-cell.component.scss'
 })
-export class Next5daysCellComponent {
+export class Next5daysCellComponent implements OnInit {
   @Input() dayStatus!: DayStatus;
+  protected minWeatherStatus!: WeatherStatusEnum|undefined;
+  protected maxWeatherStatus!: WeatherStatusEnum|undefined;
 
-  protected getIconSymbol(symbol: string): string|undefined {
-    return WeatherStatusEnum.getInstanceBySymbol(symbol)?.getIconSymbol();
+  ngOnInit(): void {
+    this.minWeatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.dayStatus.minStatus);
+    this.maxWeatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.dayStatus.maxStatus);
   }
+
 }

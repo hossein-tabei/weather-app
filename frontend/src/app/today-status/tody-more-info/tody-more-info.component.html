@@ -1,13 +1,17 @@
 <mat-card class="example-card h-100">
   <div class="mx-auto my-5 w-75">
     <mat-card-content>
-      <div class="">
+      <div class="mb-2">
         <span class=""><mat-icon>water_drop</mat-icon></span>
         <span class="">{{currentStatus.humidity}} %</span>
-        <br>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="my-2">
         <span class="">RealFeel </span>
         <span class="">{{currentStatus.realFeel}} °C</span>
-        <br>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="mt-2">
         <span class="">ChanceOfRain </span>
         <span class="">{{currentStatus.chanceOfRain}} %</span>
       </div>
