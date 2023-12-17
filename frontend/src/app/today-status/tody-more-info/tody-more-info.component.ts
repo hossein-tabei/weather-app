@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CurrentStatus } from 'src/app/model/current-status';
-import { StateService } from 'src/app/services/state.service';
 import { TodayFacadeService } from '../today-facade.service';
 
 @Component({

@@ -2,12 +2,12 @@
   <div class="mx-0 my-5 w-100">
     <div class="text-center">
       <span class="line-height-2">{{dayStatus.dayOfWeek}}</span><br>
-      <span class="line-height-2">{{dayStatus.date}}</span><br>
+      <span class="line-height-2 fs-0x9em text-muted">{{dayStatus.date}}</span><br>
       <span class="line-height-2"><mat-icon [ngClass]="maxWeatherStatus?.getColor()">{{maxWeatherStatus?.getIconSymbol()}}</mat-icon></span><br>
       <span class="line-height-2"><mat-icon class="w-1-em">arrow_upward_alt</mat-icon> {{dayStatus.maxTemp}} °C</span><br>
       <span class="line-height-2"><mat-icon class="w-1-em">arrow_downward_alt</mat-icon> {{dayStatus.minTemp}} °C</span><br>
       <span class="line-height-2"><mat-icon [ngClass]="minWeatherStatus?.getColor()">{{minWeatherStatus?.getIconSymbol()}}</mat-icon></span><br>
-      <span class="line-height-2">{{dayStatus.windSpeed}} km/h</span><br>
+      <span class="line-height-2 fs-0x9em">{{dayStatus.windSpeed}} km/h</span><br>
     </div>
   </div>
 </div>

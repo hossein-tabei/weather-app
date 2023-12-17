@@ -1,10 +1,10 @@
 <app-header></app-header>
 <app-search-box></app-search-box>
-<div class="row justify-content-center mt-3 container mx-auto">
-  <app-today-status *ngIf="isTodayStatusReady" class="col-auto mb-3"></app-today-status>
-  <app-tody-more-info *ngIf="isTodayMoreInfoReady" class="col-auto mb-3"></app-tody-more-info>
-  <app-next5days-status *ngIf="isNext5daysReady" class="col-auto mb-3"></app-next5days-status>
-  <app-next24hours-status *ngIf="isNext24hoursReady" class="col-auto mb-3"></app-next24hours-status>
-  <app-quality-index *ngIf="isQualityIndexReady" class="col-auto mb-3"></app-quality-index>
+<div class="row justify-content-between mt-3 container mx-auto">
+  <app-today-status *ngIf="isTodayStatusReady" class="col-sm-12 col-md-6 col-lg-6 col-xl-3 mb-3"></app-today-status>
+  <app-tody-more-info *ngIf="isTodayMoreInfoReady" class="col-sm-12 col-md-6 col-lg-6 col-xl-3 mb-3"></app-tody-more-info>
+  <app-next5days-status *ngIf="isNext5daysReady" class="col-sm-12 col-md-12 col-lg-12 col-xl-auto mb-3"></app-next5days-status>
+  <app-next24hours-status *ngIf="isNext24hoursReady" class="col-sm-12 col-md-12 col-lg-12 col-xl-auto mb-3"></app-next24hours-status>
+  <app-quality-index *ngIf="isQualityIndexReady" class="col-sm-12 col-md-12 col-lg-8 col-xl-6 mb-3"></app-quality-index>
 </div>
 <app-footer></app-footer>

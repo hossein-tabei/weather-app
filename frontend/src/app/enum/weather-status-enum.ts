@@ -1,6 +1,6 @@
 export class WeatherStatusEnum {
-  static readonly SUNNY = new WeatherStatusEnum('Clear','sunny', 'sunny');
-  static readonly COUDY = new WeatherStatusEnum('Cloudy','cloud', 'cloudy');
+  static readonly SUNNY = new WeatherStatusEnum('Clear','sunny', 'sunny-color');
+  static readonly COUDY = new WeatherStatusEnum('Cloudy','cloud', 'cloudy-color');
 
   private static readonly MAP_BY_SYMBOL = new Map<string, WeatherStatusEnum>();
   static {
