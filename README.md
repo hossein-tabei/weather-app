@@ -5,8 +5,8 @@ This is a repository of weather forecast web application implemented with Spring
 ## Technologies and concepts used in the project
 
 Front-end:
-- Angular 17.0.4
-- Typescript 5.2.2
+- Angular 17
+- Typescript
 - Angular Material
 - Bootstrap
 	- Responsive design
@@ -22,15 +22,15 @@ Front-end:
 			- Dumb Component
 
 Back-end:
-- Java 17.0.9
-- Spring Boot 3.0.4
+- Java 17
+- Spring Boot
 - Test Driven Development (TDD)
 - Unit testing with JUnit 5
-- Maven 3.9.4
+- Maven
 
 ## Development mode
 Two independent applications with example of proxy settings usage.
 <br>Use ``npm start`` command to run the front-end app.
 
-## Production mode
-Building the whole application as single JAR file: back-end module depends on front-end one.
+## Deployment
+Building the whole application as single JAR file: backend module depends on frontend one.
