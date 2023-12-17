@@ -2,7 +2,7 @@
 
 This is a repository of weather forecast web application implemented with Spring Boot in back-end side and Angular in front-end side.
 
-Technologies and concepts used in the project are as follows.
+## Technologies and concepts used in the project
 
 Front-end:
 - Angular 17.0.4
@@ -28,9 +28,9 @@ Back-end:
 - Unit testing with JUnit 5
 - Maven 3.9.4
 
-### Development mode
+## Development mode
 Two independent applications with example of proxy settings usage.
 <br>Use ``npm start`` command to run the front-end app.
 
-### Production mode
+## Production mode
 Building the whole application as single JAR file: back-end module depends on front-end one.
