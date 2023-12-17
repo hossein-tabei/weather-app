@@ -7,8 +7,9 @@ Technologies and concepts used in the project are as follows.
 Front-end:
 - Angular 17.0.4
 - Typescript 5.2.2
-- Node.js 20.10.0
-- Angular Material 17.0.1
+- Angular Material
+- Bootstrap
+	- Responsive design
 - Implemented with the architecture explained [here](https://dev-academy.com/angular-architecture-best-practices/)
 	- Core Module
 	- Shared Module
