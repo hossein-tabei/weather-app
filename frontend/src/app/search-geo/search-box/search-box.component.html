@@ -17,7 +17,7 @@
               (focus)="onInputFocus()">
         <mat-autocomplete #auto (optionSelected)="onSelectedOption($event.option.value)"
         [hideSingleSelectionIndicator]="false">
-          @for (location of filteredLocations | async; track location) {
+          @for (location of obsGeoSearchResult | async; track location) {
             <mat-option [value]="location">
               <span>{{location.city}}</span>,
               <small>{{location.state}}</small>,

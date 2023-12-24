@@ -1,9 +1,9 @@
-package demo.application.backend.repository;
+package demo.application.backend.service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import demo.application.backend.model.AirQualityIndex;
 import demo.application.backend.model.CurrentStatus;
@@ -11,22 +11,11 @@ import demo.application.backend.model.DayStatus;
 import demo.application.backend.model.HourStatus;
 import demo.application.backend.model.PolutionIndex;
 
-@Repository
-public class ForecastRepository {
+@Service
+public class SrvcForecast {
 
 	public CurrentStatus currentStatus(float lat, float lon) {
-		
-		List<PolutionIndex> polutionIndexes = new ArrayList<>();
-		polutionIndexes.add(new PolutionIndex("PM2.5", 28.9f));
-		polutionIndexes.add(new PolutionIndex("PM10", 16.4f));
-		polutionIndexes.add(new PolutionIndex("SO2", 3));
-		polutionIndexes.add(new PolutionIndex("NO2", 19));
-		polutionIndexes.add(new PolutionIndex("O3", 12.7f));
-		polutionIndexes.add(new PolutionIndex("CO", 2.7f));
-		AirQualityIndex airQualityIndex = new AirQualityIndex(28, "Good",
-											"Air quality is good. A perfect day for a walk!",
-											"Oakland Published at 07:30", polutionIndexes);
-		return new CurrentStatus("Oakland", "United States", "Clear", 19, 15, 25, 35, 14, 10, airQualityIndex);
+		return new CurrentStatus("Oakland", "United States", "Clear", 19, 15, 25, 35, 14, 10);
 	}
 	
 	public List<DayStatus> next5DaysForecast(float lat, float lon) {
@@ -66,5 +55,19 @@ public class ForecastRepository {
 		next5DayStats.add(new HourStatus(14, "Clear", 7.4f, "21:00"));
 		next5DayStats.add(new HourStatus(14, "Clear", 7.4f, "22:00"));
 		return next5DayStats;
+	}
+	
+	public AirQualityIndex airQualityIndex(float lat, float lon) {
+		
+		List<PolutionIndex> polutionIndexes = new ArrayList<>();
+		polutionIndexes.add(new PolutionIndex("PM2.5", 28.9f));
+		polutionIndexes.add(new PolutionIndex("PM10", 16.4f));
+		polutionIndexes.add(new PolutionIndex("SO2", 3));
+		polutionIndexes.add(new PolutionIndex("NO2", 19));
+		polutionIndexes.add(new PolutionIndex("O3", 12.7f));
+		polutionIndexes.add(new PolutionIndex("CO", 2.7f));
+		return new AirQualityIndex(28, "Good",
+											"Air quality is good. A perfect day for a walk!",
+											"Oakland Published at 07:30", polutionIndexes);
 	}
 }

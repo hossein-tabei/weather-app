@@ -22,18 +22,19 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import demo.application.backend.model.AirQualityIndex;
 import demo.application.backend.model.CurrentStatus;
+import demo.application.backend.model.DTOResultWrapper;
 import demo.application.backend.model.DayStatus;
 import demo.application.backend.model.HourStatus;
 import demo.application.backend.model.PolutionIndex;
-import demo.application.backend.repository.ForecastRepository;
+import demo.application.backend.service.SrvcForecast;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ForecastControllerTest {
+class CtrlForecastTest {
 
 	@Autowired private MockMvc mockMvc;
-	@Autowired private ForecastController controller;
-	@MockBean private ForecastRepository repository;
+	@Autowired private CtrlForecast controller;
+	@MockBean private SrvcForecast service;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test
@@ -44,19 +45,10 @@ class ForecastControllerTest {
 	@Test
 	void assertThat_CurrentStatus_ReturnExpectedResultWithTheGivenInput() throws Exception {
 		// Arrange
-		List<PolutionIndex> polutionIndexes = new ArrayList<>();
-		polutionIndexes.add(new PolutionIndex("PM2.5", 28.9f));
-		polutionIndexes.add(new PolutionIndex("PM10", 16.4f));
-		polutionIndexes.add(new PolutionIndex("SO2", 3));
-		polutionIndexes.add(new PolutionIndex("NO2", 19));
-		polutionIndexes.add(new PolutionIndex("O3", 12.7f));
-		polutionIndexes.add(new PolutionIndex("CO", 2.7f));
-		AirQualityIndex airQualityIndex = new AirQualityIndex(28, "Good",
-											"Air quality is good. A perfect day for a walk!",
-											"Oakland Published at 07:30", polutionIndexes);
-		CurrentStatus mockedCurrentStatus = new CurrentStatus("Oakland", "United States", "Clear", 19, 15, 25, 35, 14, 10, airQualityIndex);
-		Mockito.doReturn(mockedCurrentStatus).when(repository).currentStatus(156, 1236);
-		String expectedResult = objectMapper.writeValueAsString(mockedCurrentStatus);
+		CurrentStatus mockedCurrentStatus = new CurrentStatus("Oakland", "United States", "Clear", 19, 15, 25, 35, 14, 10);
+		Mockito.doReturn(mockedCurrentStatus).when(service).currentStatus(156, 1236);
+		String expectedResult = objectMapper
+				.writeValueAsString(new DTOResultWrapper<CurrentStatus>(1, "Operation Done Successfully", mockedCurrentStatus));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
@@ -79,8 +71,9 @@ class ForecastControllerTest {
 		mockedNext5DayStats.add(new DayStatus("Wednesday"	, "2023/11/29", "Cloudy", "Clear", 6, 16, 7.4f));
 		mockedNext5DayStats.add(new DayStatus("Thursday"	, "2023/11/30", "Cloudy", "Clear", 6, 16, 7.4f));
 		mockedNext5DayStats.add(new DayStatus("Friday"		, "2023/12/01", "Cloudy", "Clear", 6, 16, 7.4f));
-		Mockito.doReturn(mockedNext5DayStats).when(repository).next5DaysForecast(156, 1236);
-		String expectedResult = objectMapper.writeValueAsString(mockedNext5DayStats);
+		Mockito.doReturn(mockedNext5DayStats).when(service).next5DaysForecast(156, 1236);
+		String expectedResult = objectMapper
+				.writeValueAsString(new DTOResultWrapper<List<DayStatus>>(1, "Operation Done Successfully", mockedNext5DayStats));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
@@ -122,13 +115,43 @@ class ForecastControllerTest {
 		mockedNext5DayStats.add(new HourStatus(14, "Clear", 7.4f, "20:00"));
 		mockedNext5DayStats.add(new HourStatus(14, "Clear", 7.4f, "21:00"));
 		mockedNext5DayStats.add(new HourStatus(14, "Clear", 7.4f, "22:00"));
-		Mockito.doReturn(mockedNext5DayStats).when(repository).next24HoursForecast(156, 1236);
-		String expectedResult = objectMapper.writeValueAsString(mockedNext5DayStats);
+		Mockito.doReturn(mockedNext5DayStats).when(service).next24HoursForecast(156, 1236);
+		String expectedResult = objectMapper
+				.writeValueAsString(new DTOResultWrapper<List<HourStatus>>(1, "Operation Done Successfully", mockedNext5DayStats));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
 		// Assert
 		this.mockMvc.perform(get("/api/forecast/next24hours")
+				.param("lat", "156")
+				.param("lon", "1236"))
+		.andDo(print())
+			.andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+			.andExpect(status().isOk())
+			.andExpect(content().json(expectedResult));
+	}
+	
+	@Test
+	void assertThat_AirQualityIndex_ReturnExpectedResultWithTheGivenInput() throws Exception {
+		// Arrange
+		List<PolutionIndex> polutionIndexes = new ArrayList<>();
+		polutionIndexes.add(new PolutionIndex("PM2.5", 28.9f));
+		polutionIndexes.add(new PolutionIndex("PM10", 16.4f));
+		polutionIndexes.add(new PolutionIndex("SO2", 3));
+		polutionIndexes.add(new PolutionIndex("NO2", 19));
+		polutionIndexes.add(new PolutionIndex("O3", 12.7f));
+		polutionIndexes.add(new PolutionIndex("CO", 2.7f));
+		AirQualityIndex mockedAirQualityIndex = new AirQualityIndex(28, "Good",
+											"Air quality is good. A perfect day for a walk!",
+											"Oakland Published at 07:30", polutionIndexes);
+		Mockito.doReturn(mockedAirQualityIndex).when(service).airQualityIndex(156, 1236);
+		String expectedResult = objectMapper
+				.writeValueAsString(new DTOResultWrapper<AirQualityIndex>(1, "Operation Done Successfully", mockedAirQualityIndex));
+		System.out.println("expectedResult:"+expectedResult);
+		
+		// Act
+		// Assert
+		this.mockMvc.perform(get("/api/forecast/aqi")
 				.param("lat", "156")
 				.param("lon", "1236"))
 		.andDo(print())

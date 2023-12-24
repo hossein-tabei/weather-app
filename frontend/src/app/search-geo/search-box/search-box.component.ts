@@ -12,15 +12,16 @@ import { GeoFacadeService } from '../geo-facade.service';
 export class SearchBoxComponent {
 
   protected fcLocation = new FormControl<string>('');
-  protected filteredLocations!: Observable<Location[]>;
+  protected obsGeoSearchResult!: Observable<Location[]>;
 
   constructor(private geoFacadeService: GeoFacadeService) {
+    this.obsGeoSearchResult = geoFacadeService.getLocationList();
 
     this.fcLocation.valueChanges.pipe(debounceTime(300))
       .subscribe((searchClause: string|null) => {
-        this.filteredLocations = searchClause?.trim()
-                              ? this.geoFacadeService.searchGeo(searchClause)
-                              : new Observable<Location[]>();
+        if (searchClause?.trim()) {
+          this.geoFacadeService.searchGeo(searchClause);
+        }
     });
   }
 

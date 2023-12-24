@@ -20,16 +20,17 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import demo.application.backend.model.DTOResultWrapper;
 import demo.application.backend.model.Location;
-import demo.application.backend.repository.GeoRepository;
+import demo.application.backend.service.SrvcGeo;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class GeoControllerTest {
+class CtrlGeoTest {
 
 	@Autowired private MockMvc mockMvc;
-	@Autowired private GeoController controller;
-	@MockBean private GeoRepository repository;
+	@Autowired private CtrlGeo controller;
+	@MockBean private SrvcGeo repository;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test
@@ -45,7 +46,7 @@ class GeoControllerTest {
 		mockedLocations.add(mockedLocation);
 		
 		Mockito.doReturn(mockedLocations).when(repository).searchGeo("Oakland");
-		String expectedResult = objectMapper.writeValueAsString(mockedLocations);
+		String expectedResult = objectMapper.writeValueAsString(new DTOResultWrapper<List<Location>>(1, "Operation Done Successfully", mockedLocations));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		

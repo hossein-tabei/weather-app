@@ -11,10 +11,9 @@ public class CurrentStatus {
 	private int humidity;		// 35 %
 	private int realFeel;		// 14 C
 	private int chanceOfRain;	// 10 %
-	private AirQualityIndex airQualityIndex;
 	
 	public CurrentStatus(String city, String country, String status, int temperature, int minTemp, int maxTemp,
-			int humidity, int realFeel, int chanceOfRain, AirQualityIndex airQualityIndex) {
+			int humidity, int realFeel, int chanceOfRain) {
 		
 		this.city = city;
 		this.country = country;
@@ -25,7 +24,6 @@ public class CurrentStatus {
 		this.humidity = humidity;
 		this.realFeel = realFeel;
 		this.chanceOfRain = chanceOfRain;
-		this.airQualityIndex = airQualityIndex;
 	}
 
 	public String getCity() {
@@ -99,21 +97,12 @@ public class CurrentStatus {
 	public void setChanceOfRain(int chanceOfRain) {
 		this.chanceOfRain = chanceOfRain;
 	}
-	
-	public AirQualityIndex getAirQualityIndex() {
-		return airQualityIndex;
-	}
-
-	public void setAirQualityIndex(AirQualityIndex airQualityIndex) {
-		this.airQualityIndex = airQualityIndex;
-	}
 
 	@Override
 	public String toString() {
 		return "CurrentStatus [city=" + city + ", country=" + country + ", status=" + status + ", temperature="
 				+ temperature + ", minTemp=" + minTemp + ", maxTemp=" + maxTemp + ", humidity=" + humidity
-				+ ", realFeel=" + realFeel + ", chanceOfRain=" + chanceOfRain + ", airQualityIndex=" + airQualityIndex
-				+ "]";
+				+ ", realFeel=" + realFeel + ", chanceOfRain=" + chanceOfRain + "]";
 	}
 	
 }

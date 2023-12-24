@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import demo.application.backend.model.AirQualityIndex;
 import demo.application.backend.model.CurrentStatus;
 import demo.application.backend.model.DayStatus;
 import demo.application.backend.model.HourStatus;
@@ -102,6 +103,26 @@ class HttpRequestTest {
 		assertThat(response.getBody()).isNotNull();
 		
 		System.out.println("getBody:"+Arrays.asList(response.getBody()).toString());
+		assertEquals(response.getStatusCode(), HttpStatus.OK);
+	}
+	
+	@Test
+	void assertThat_AirQualityIndex_ResultIsNotNullAndStatusIsOK() throws Exception {
+		// Arrange
+		UriComponentsBuilder builder = UriComponentsBuilder
+				.fromHttpUrl("http://localhost:" + port + "/api/forecast/aqi")
+		        .queryParam("lat", "156")
+		        .queryParam("lon", "1236");
+		
+		// Act
+		ResponseEntity<AirQualityIndex> response = restTemplate
+				.getForEntity(builder.build().toUriString(), AirQualityIndex.class);
+		
+		// Assert
+		System.out.println("getBody:"+response.getBody());
+		assertThat(response.getBody()).isNotNull();
+		
+		System.out.println("getBody:"+response.getBody().toString());
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 }

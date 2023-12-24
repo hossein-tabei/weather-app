@@ -2,13 +2,13 @@ package demo.application.backend.model;
 
 public class Location {
 
-	private float lat;
-	private float lon;
+	private double lat;
+	private double lon;
 	private String city;
 	private String state;
 	private String country;
 	
-	public Location(float lat, float lon, String city, String state, String country) {
+	public Location(double lat, double lon, String city, String state, String country) {
 		super();
 		this.lat = lat;
 		this.lon = lon;
@@ -17,19 +17,19 @@ public class Location {
 		this.country = country;
 	}
 
-	public float getLat() {
+	public double getLat() {
 		return lat;
 	}
 
-	public void setLat(float lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
-	public float getLon() {
+	public double getLon() {
 		return lon;
 	}
 
-	public void setLon(float lon) {
+	public void setLon(double lon) {
 		this.lon = lon;
 	}
 

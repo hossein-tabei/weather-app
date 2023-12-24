@@ -11,17 +11,26 @@ import { HourStatus } from '../model/hour-status';
 })
 export class StateService {
 
+  private bsLocationList: BehaviorSubject<Location[]> = new BehaviorSubject(new Array<Location>);
   private bsLocation: BehaviorSubject<Location> = new BehaviorSubject(<Location>{});
   private bsCurrentStatus: BehaviorSubject<CurrentStatus> = new BehaviorSubject(<CurrentStatus>{});
-  private bsNext5DaysStatusList: BehaviorSubject<DayStatus[]> = new BehaviorSubject(<DayStatus[]>{});
-  private bsNext24HoursStatusList: BehaviorSubject<HourStatus[]> = new BehaviorSubject(<HourStatus[]>{});
+  private bsNext5DaysStatusList: BehaviorSubject<DayStatus[]> = new BehaviorSubject(new Array<DayStatus>);
+  private bsNext24HoursStatusList: BehaviorSubject<HourStatus[]> = new BehaviorSubject(new Array<HourStatus>);
   private bsAirQualityIndex: BehaviorSubject<AirQualityIndex> = new BehaviorSubject(<AirQualityIndex>{});
 
-  // location
-  setLocation(location: Location): void {
+  // locationList
+  setLocationList(dayStatusList: Location[]): void {
+    this.bsLocationList.next(dayStatusList);
+  }
+  getLocationList(): Observable<Location[]> {
+    return this.bsLocationList.asObservable();
+  }
+
+  // selectedLocation
+  setSelectedLocation(location: Location): void {
     this.bsLocation.next(location);
   }
-  getLocation(): Observable<Location> {
+  getSelectedLocation(): Observable<Location> {
     return this.bsLocation.asObservable();
   }
 

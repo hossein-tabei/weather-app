@@ -10,5 +10,4 @@ export interface CurrentStatus {
 	humidity: number;		  // 35 %
 	realFeel: number;		  // 14 C
 	chanceOfRain: number;	// 10 %
-	airQualityIndex: AirQualityIndex;
 }

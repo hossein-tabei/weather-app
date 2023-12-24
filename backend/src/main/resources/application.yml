@@ -1,0 +1,22 @@
+server:
+  port: 808
+  
+logging:
+  level:
+    root: trace
+    '[demo.application]': trace 
+    '[org.springframework]': info
+    '[org.apache]': info
+    '[sun.rmi]': info
+    '[java]': info
+    '[javax]': info
+    '[reactor]': info
+    '[io.netty]': info
+    
+ioConfig:
+  apiKey: '2e64dbcde5f4ddf9422d6d8dbcf85970'
+  geo:
+    host: 'http://api.openweathermap.org'
+    path:
+      searchGeo: '/geo/1.0/direct'
+    
