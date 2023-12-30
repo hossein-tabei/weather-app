@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -17,7 +18,8 @@ import demo.application.backend.converter.ApiResultConverter;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class RepoGeo {
+@ConditionalOnProperty(value="ioConfig.apiKey")
+public class RepoGeo implements IRepoGeo {
 	private Logger logger = LoggerFactory.getLogger(RepoGeo.class);
 	
 	@SuppressWarnings("unused")

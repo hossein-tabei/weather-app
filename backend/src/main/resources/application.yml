@@ -1,3 +1,5 @@
+spring.profiles.active: production
+
 server:
   port: 808
   
@@ -14,7 +16,6 @@ logging:
     '[io.netty]': info
     
 ioConfig:
-  apiKey: '2e64dbcde5f4ddf9422d6d8dbcf85970'
   geo:
     host: 'http://api.openweathermap.org'
     path:
