@@ -48,7 +48,7 @@ class CtrlForecastTest {
 		CurrentStatus mockedCurrentStatus = new CurrentStatus("Oakland", "United States", "Clear", 19, 15, 25, 35, 14, 10);
 		Mockito.doReturn(mockedCurrentStatus).when(service).currentStatus(156, 1236);
 		String expectedResult = objectMapper
-				.writeValueAsString(new DTOResultWrapper<CurrentStatus>(1, "Operation Done Successfully", mockedCurrentStatus));
+				.writeValueAsString(new DTOResultWrapper<CurrentStatus>("Operation Done Successfully", mockedCurrentStatus));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
@@ -73,7 +73,7 @@ class CtrlForecastTest {
 		mockedNext5DayStats.add(new DayStatus("Friday"		, "2023/12/01", "Cloudy", "Clear", 6, 16, 7.4f));
 		Mockito.doReturn(mockedNext5DayStats).when(service).next5DaysForecast(156, 1236);
 		String expectedResult = objectMapper
-				.writeValueAsString(new DTOResultWrapper<List<DayStatus>>(1, "Operation Done Successfully", mockedNext5DayStats));
+				.writeValueAsString(new DTOResultWrapper<List<DayStatus>>("Operation Done Successfully", mockedNext5DayStats));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
@@ -117,7 +117,7 @@ class CtrlForecastTest {
 		mockedNext5DayStats.add(new HourStatus(14, "Clear", 7.4f, "22:00"));
 		Mockito.doReturn(mockedNext5DayStats).when(service).next24HoursForecast(156, 1236);
 		String expectedResult = objectMapper
-				.writeValueAsString(new DTOResultWrapper<List<HourStatus>>(1, "Operation Done Successfully", mockedNext5DayStats));
+				.writeValueAsString(new DTOResultWrapper<List<HourStatus>>("Operation Done Successfully", mockedNext5DayStats));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
@@ -146,7 +146,7 @@ class CtrlForecastTest {
 											"Oakland Published at 07:30", polutionIndexes);
 		Mockito.doReturn(mockedAirQualityIndex).when(service).airQualityIndex(156, 1236);
 		String expectedResult = objectMapper
-				.writeValueAsString(new DTOResultWrapper<AirQualityIndex>(1, "Operation Done Successfully", mockedAirQualityIndex));
+				.writeValueAsString(new DTOResultWrapper<AirQualityIndex>("Operation Done Successfully", mockedAirQualityIndex));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act

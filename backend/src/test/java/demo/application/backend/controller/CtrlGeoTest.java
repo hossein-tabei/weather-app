@@ -46,7 +46,7 @@ class CtrlGeoTest {
 		mockedLocations.add(mockedLocation);
 		
 		Mockito.doReturn(mockedLocations).when(repository).searchGeo("Oakland");
-		String expectedResult = objectMapper.writeValueAsString(new DTOResultWrapper<List<Location>>(1, "Operation Done Successfully", mockedLocations));
+		String expectedResult = objectMapper.writeValueAsString(new DTOResultWrapper<List<Location>>("Operation Done Successfully", mockedLocations));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		

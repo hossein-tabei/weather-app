@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import demo.application.backend.excp.InternalException;
 import demo.application.backend.model.DTOResultWrapper;
 import demo.application.backend.model.Location;
 import demo.application.backend.service.SrvcGeo;
@@ -23,9 +24,9 @@ public class CtrlGeo {
 	@Autowired private SrvcGeo srvcGeo;
 	
 	@GetMapping(path="/search", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public DTOResultWrapper<List<Location>> searchGeo(@RequestParam String searchClause) {
+	public DTOResultWrapper<List<Location>> searchGeo(@RequestParam String searchClause) throws InternalException {
 		logger.trace("searchClause:{}",searchClause);
 		List<Location> searchResult = this.srvcGeo.searchGeo(searchClause);
-		return new DTOResultWrapper<List<Location>>(1, "Operation Done Successfully", searchResult);
+		return new DTOResultWrapper<List<Location>>("Operation Done Successfully", searchResult);
 	}
 }

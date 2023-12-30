@@ -14,7 +14,6 @@ import demo.application.backend.model.CurrentStatus;
 import demo.application.backend.model.DTOResultWrapper;
 import demo.application.backend.model.DayStatus;
 import demo.application.backend.model.HourStatus;
-import demo.application.backend.model.Location;
 import demo.application.backend.service.SrvcForecast;
 
 @RestController
@@ -26,24 +25,24 @@ public class CtrlForecast {
 	@GetMapping(path = "/now", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<CurrentStatus> currentStatus(@RequestParam float lat, @RequestParam  float lon) {
 		CurrentStatus fetchResult = srvcForecast.currentStatus(lat, lon);
-		return new DTOResultWrapper<CurrentStatus>(1, "Operation Done Successfully", fetchResult);
+		return new DTOResultWrapper<CurrentStatus>("Operation Done Successfully", fetchResult);
 	}
 	
 	@GetMapping(path = "/next5days", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<List<DayStatus>> next5DaysForecast(@RequestParam float lat, @RequestParam  float lon) {
 		List<DayStatus> fetchResult = srvcForecast.next5DaysForecast(lat, lon);
-		return new DTOResultWrapper<List<DayStatus>>(1, "Operation Done Successfully", fetchResult);
+		return new DTOResultWrapper<List<DayStatus>>("Operation Done Successfully", fetchResult);
 	}
 	
 	@GetMapping(path = "/next24hours", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<List<HourStatus>> next24HoursForecast(@RequestParam float lat, @RequestParam  float lon) {
 		List<HourStatus> fetchResult = srvcForecast.next24HoursForecast(lat, lon);
-		return new DTOResultWrapper<List<HourStatus>>(1, "Operation Done Successfully", fetchResult);
+		return new DTOResultWrapper<List<HourStatus>>("Operation Done Successfully", fetchResult);
 	}
 	
 	@GetMapping(path = "/aqi", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<AirQualityIndex> airQualityIndex(@RequestParam float lat, @RequestParam  float lon) {
 		AirQualityIndex fetchResult = srvcForecast.airQualityIndex(lat, lon);
-		return new DTOResultWrapper<AirQualityIndex>(1, "Operation Done Successfully", fetchResult);
+		return new DTOResultWrapper<AirQualityIndex>("Operation Done Successfully", fetchResult);
 	}
 }

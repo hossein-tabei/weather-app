@@ -16,7 +16,7 @@ import demo.application.backend.api.model.ApiLocation;
  */
 @Repository
 @ConditionalOnProperty(value="ioConfig.apiKey", matchIfMissing = true)
-public class RepoGeoMock implements IRepoGeo {
+public class RepoGeoMock implements RepoGeoInterface {
 	private Logger logger = LoggerFactory.getLogger(RepoGeoMock.class);
 	
 	public List<ApiLocation> searchGeo(String searchClause) {

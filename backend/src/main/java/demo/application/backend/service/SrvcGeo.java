@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import demo.application.backend.api.IRepoGeo;
+import demo.application.backend.api.RepoGeoInterface;
 import demo.application.backend.converter.ApiToDtoConverter;
+import demo.application.backend.excp.InternalException;
 import demo.application.backend.model.Location;
 
 @Service
@@ -16,13 +17,13 @@ public class SrvcGeo {
 	private Logger logger = LoggerFactory.getLogger(SrvcGeo.class);
 	
 	@Autowired
-	IRepoGeo repoGeo;
+	RepoGeoInterface repoGeo;
 	
-	public SrvcGeo(IRepoGeo repoGeo) {
+	public SrvcGeo(RepoGeoInterface repoGeo) {
 		logger.trace("repoGeo type:{}",repoGeo.getClass().toString());
 	}
 	
-	public List<Location> searchGeo(String searchClause) {
+	public List<Location> searchGeo(String searchClause) throws InternalException {
 		logger.trace("searchClause:{}",searchClause);
 		return ApiToDtoConverter.convertApiLocationListToLocationList(repoGeo.searchGeo(searchClause));
 	}
