@@ -7,7 +7,7 @@
     <mat-card-content>
       <mat-divider></mat-divider>
       <div class="row justify-contenet-center align-items-center my-2">
-        <mat-icon [ngClass]="weatherStatus?.getColor()" class="w-auto col-auto w-auto">{{weatherStatus?.getIconSymbol()}}</mat-icon>
+        <div [ngClass]="weatherStatus?.getWeatherIcon()?.getIconClassName()"></div>
         <h1 class="col-auto mb-0">{{currentStatus.temperature}} °C</h1>
       </div>
       <mat-divider></mat-divider>

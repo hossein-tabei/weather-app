@@ -4,20 +4,20 @@ public class DayStatus {
 
 	private String dayOfWeek;
 	private String date;
-	private String minStatus;	// Clear
-	private String maxStatus;	// Clear
+	private int minStatusId;	// 800: clear sky
+	private int maxStatusId;	// 804: overcast clouds
 	private int minTemp;		// 15 C
 	private int maxTemp;		// 25 C
 	private float windSpeed;	// 7.4 km/h
 	
-	public DayStatus(String dayOfWeek, String date, String minStatus, String maxStatus, int minTemp, int maxTemp,
+	public DayStatus(String dayOfWeek, String date, int minStatusId, int maxStatusId, int minTemp, int maxTemp,
 			float windSpeed) {
 		
 		super();
 		this.dayOfWeek = dayOfWeek;
 		this.date = date;
-		this.minStatus = minStatus;
-		this.maxStatus = maxStatus;
+		this.minStatusId = minStatusId;
+		this.maxStatusId = maxStatusId;
 		this.minTemp = minTemp;
 		this.maxTemp = maxTemp;
 		this.windSpeed = windSpeed;
@@ -35,17 +35,17 @@ public class DayStatus {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	public String getMinStatus() {
-		return minStatus;
+	public int getMinStatusId() {
+		return minStatusId;
 	}
-	public void setMinStatus(String minStatus) {
-		this.minStatus = minStatus;
+	public void setMinStatusId(int minStatusId) {
+		this.minStatusId = minStatusId;
 	}
-	public String getMaxStatus() {
-		return maxStatus;
+	public int getMaxStatusId() {
+		return maxStatusId;
 	}
-	public void setMaxStatus(String maxStatus) {
-		this.maxStatus = maxStatus;
+	public void setMaxStatusId(int maxStatusId) {
+		this.maxStatusId = maxStatusId;
 	}
 	public int getMinTemp() {
 		return minTemp;
@@ -67,8 +67,8 @@ public class DayStatus {
 	}
 	@Override
 	public String toString() {
-		return "DayStatus [dayOfWeek=" + dayOfWeek + ", date=" + date + ", minStatus=" + minStatus + ", maxStatus="
-				+ maxStatus + ", minTemp=" + minTemp + ", maxTemp=" + maxTemp + ", windSpeed=" + windSpeed + "]";
+		return "DayStatus [dayOfWeek=" + dayOfWeek + ", date=" + date + ", minStatusId=" + minStatusId + ", maxStatusId="
+				+ maxStatusId + ", minTemp=" + minTemp + ", maxTemp=" + maxTemp + ", windSpeed=" + windSpeed + "]";
 	}
 	
 }

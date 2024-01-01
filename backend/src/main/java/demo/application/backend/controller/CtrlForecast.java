@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import demo.application.backend.excp.InternalException;
 import demo.application.backend.model.AirQualityIndex;
 import demo.application.backend.model.CurrentStatus;
 import demo.application.backend.model.DTOResultWrapper;
@@ -23,7 +24,7 @@ public class CtrlForecast {
 	@Autowired private SrvcForecast srvcForecast;
 	
 	@GetMapping(path = "/now", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public DTOResultWrapper<CurrentStatus> currentStatus(@RequestParam float lat, @RequestParam  float lon) {
+	public DTOResultWrapper<CurrentStatus> currentStatus(@RequestParam float lat, @RequestParam  float lon) throws InternalException {
 		CurrentStatus fetchResult = srvcForecast.currentStatus(lat, lon);
 		return new DTOResultWrapper<CurrentStatus>("Operation Done Successfully", fetchResult);
 	}

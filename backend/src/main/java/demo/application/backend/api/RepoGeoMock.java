@@ -1,15 +1,12 @@
 package demo.application.backend.api;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Repository;
-
-import demo.application.backend.api.model.ApiLocation;
 
 /**
  * The instance of this class is being used when 'apiKey' property is not present in the application config.
@@ -19,17 +16,21 @@ import demo.application.backend.api.model.ApiLocation;
 public class RepoGeoMock implements RepoGeoInterface {
 	private Logger logger = LoggerFactory.getLogger(RepoGeoMock.class);
 	
-	public List<ApiLocation> searchGeo(String searchClause) {
+	public JSONArray searchGeo(String searchClause) {
 		logger.trace("searchClause:{}",searchClause);
 		
-		List<ApiLocation> mockedApiLocations = new ArrayList<>();
-		mockedApiLocations.add(new ApiLocation("Little Rock", new HashMap<String, String>(), 155, 1235, "Arkansas", "US"));
-		mockedApiLocations.add(new ApiLocation("Oakland", new HashMap<String, String>(), 156, 1236, "California", "US"));
-		mockedApiLocations.add(new ApiLocation("Miami", new HashMap<String, String>(), 157, 1237, "Florida", "US"));
-		mockedApiLocations.add(new ApiLocation("Houston", new HashMap<String, String>(), 158, 1238, "Texas", "US"));
+		JSONArray joMockedLocations = new JSONArray();
+		try {
+			joMockedLocations.put(new JSONObject().put("name", "Little Rock").put("local_names", new JSONObject()).put("lat", 155).put("lon", 1235).put("state", "Arkansas"		).put("country", "US"));
+			joMockedLocations.put(new JSONObject().put("name", "Oakland"	).put("local_names", new JSONObject()).put("lat", 156).put("lon", 1236).put("state", "California"	).put("country", "US"));
+			joMockedLocations.put(new JSONObject().put("name", "Miami"		).put("local_names", new JSONObject()).put("lat", 157).put("lon", 1237).put("state", "Florida"		).put("country", "US"));
+			joMockedLocations.put(new JSONObject().put("name", "Houston"	).put("local_names", new JSONObject()).put("lat", 158).put("lon", 1238).put("state", "Texas"		).put("country", "US"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 		
-		logger.info("Getting: Mock Data, result:{}",mockedApiLocations);
-		return mockedApiLocations;
+		logger.info("Getting: Mock Data, result:{}",joMockedLocations);
+		return joMockedLocations;
 	}
 	
 }

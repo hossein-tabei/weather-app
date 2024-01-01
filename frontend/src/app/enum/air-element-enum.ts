@@ -8,12 +8,11 @@ export class AirElementEnum {
 
   private static readonly MAP_BY_SYMBOL = new Map<string, AirElementEnum>();
   static {
-    this.MAP_BY_SYMBOL.set(this.PM2_5.symbol, this.PM2_5);
-    this.MAP_BY_SYMBOL.set(this.PM10.symbol, this.PM10);
-    this.MAP_BY_SYMBOL.set(this.SO2.symbol, this.SO2);
-    this.MAP_BY_SYMBOL.set(this.NO2.symbol, this.NO2);
-    this.MAP_BY_SYMBOL.set(this.O3.symbol, this.O3);
-    this.MAP_BY_SYMBOL.set(this.CO.symbol, this.CO);
+    for (let [key, value] of Object.entries(AirElementEnum)) {
+      if (key!=='MAP_BY_SYMBOL') {
+        this.MAP_BY_SYMBOL.set(value.symbol, value);
+      }
+    }
   }
 
   private constructor(private symbol: string, private literalSymbol: string, private numericSymbol: number|undefined){}

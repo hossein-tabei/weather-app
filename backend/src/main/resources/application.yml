@@ -20,4 +20,8 @@ ioConfig:
     host: 'http://api.openweathermap.org'
     path:
       searchGeo: '/geo/1.0/direct'
+  forecast:
+    host: 'http://api.openweathermap.org'
+    path:
+      currentStatus: '/data/2.5/weather'
     

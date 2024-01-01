@@ -7,10 +7,90 @@ body {
   background-color: lavender;
 }
 
-.sunny-color {
-  color: #ffd740;
+.text-center-compatible {
+  text-align: -moz-center;
+  text-align: -webkit-center;
 }
 
-.cloudy-color {
-  color: darkgray;
+.weather-icon {
+  background-size: contain;
+  width: 65px;
+  height: 65px;
+
+  &.small {
+    width: 35px;
+    height: 35px;
+  }
+
+  // clear_sky
+  &.clear_sky {
+    background-image: url("http://openweathermap.org/img/wn/01d@2x.png");
+  }
+  &.clear_sky.night {
+    background-image: url("http://openweathermap.org/img/wn/01n@2x.png");
+  }
+
+  // few_clouds
+  &.few_clouds {
+    background-image: url("http://openweathermap.org/img/wn/02d@2x.png");
+  }
+  &.few_clouds.night {
+    background-image: url("http://openweathermap.org/img/wn/02n@2x.png");
+  }
+
+  // scattered_clouds
+  &.scattered_clouds {
+    background-image: url("http://openweathermap.org/img/wn/03d@2x.png");
+  }
+  &.scattered_clouds.night {
+    background-image: url("http://openweathermap.org/img/wn/03n@2x.png");
+  }
+
+  // broken_clouds
+  &.broken_clouds {
+    background-image: url("http://openweathermap.org/img/wn/04d@2x.png");
+  }
+  &.broken_clouds.night {
+    background-image: url("http://openweathermap.org/img/wn/04n@2x.png");
+  }
+
+  // shower_rain
+  &.shower_rain {
+    background-image: url("http://openweathermap.org/img/wn/09d@2x.png");
+  }
+  &.shower_rain.night {
+    background-image: url("http://openweathermap.org/img/wn/09n@2x.png");
+  }
+
+  // rain
+  &.rain {
+    background-image: url("http://openweathermap.org/img/wn/10d@2x.png");
+  }
+  &.rain.night {
+    background-image: url("http://openweathermap.org/img/wn/10n@2x.png");
+  }
+
+  // thunderstorm
+  &.thunderstorm {
+    background-image: url("http://openweathermap.org/img/wn/11d@2x.png");
+  }
+  &.thunderstorm.night {
+    background-image: url("http://openweathermap.org/img/wn/11n@2x.png");
+  }
+
+  // snow
+  &.snow {
+    background-image: url("http://openweathermap.org/img/wn/13d@2x.png");
+  }
+  &.snow.night {
+    background-image: url("http://openweathermap.org/img/wn/13n@2x.png");
+  }
+
+  // mist
+  &.mist {
+    background-image: url("http://openweathermap.org/img/wn/50d@2x.png");
+  }
+  &.mist.night {
+    background-image: url("http://openweathermap.org/img/wn/50n@2x.png");
+  }
 }

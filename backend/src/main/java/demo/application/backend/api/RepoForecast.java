@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
@@ -18,8 +18,8 @@ import reactor.core.publisher.Mono;
 
 @Repository
 @ConditionalOnProperty(value="ioConfig.apiKey")
-public class RepoGeo implements RepoGeoInterface {
-	private Logger logger = LoggerFactory.getLogger(RepoGeo.class);
+public class RepoForecast implements RepoForecastInterface {
+	private Logger logger = LoggerFactory.getLogger(RepoForecast.class);
 	
 	@SuppressWarnings("unused")
 	@Autowired
@@ -30,21 +30,21 @@ public class RepoGeo implements RepoGeoInterface {
 	private final String SEARCH_PATH;
 	private WebClient client;
 	
-	public RepoGeo(AppConfig appConfig) {
+	public RepoForecast(AppConfig appConfig) {
 		API_KEY = appConfig.getConfigValue("ioConfig.apiKey");
-		HOST = appConfig.getConfigValue("ioConfig.geo.host");
-		SEARCH_PATH = appConfig.getConfigValue("ioConfig.geo.path.searchGeo");
+		HOST = appConfig.getConfigValue("ioConfig.forecast.host");
+		SEARCH_PATH = appConfig.getConfigValue("ioConfig.forecast.path.currentStatus");
 		
 		client = WebClient.create(HOST);
 	}
 	
-	public JSONArray searchGeo(String searchClause) throws InternalException {
-		logger.trace("searchClause:{}",searchClause);
+	public JSONObject currentStatus(double lat, double lon) throws InternalException {
+		logger.trace("lat:{}, lon:{}",lat,lon);
 		
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder
 				.fromHttpUrl(HOST+SEARCH_PATH)
-		        .queryParam("q", searchClause)
-		        .queryParam("limit", 5)
+		        .queryParam("lat", lat)
+		        .queryParam("lon", lon)
 		        .queryParam("appid", API_KEY);
 		
 		Mono<ResponseEntity<String>> monoResult = client.get()
@@ -66,19 +66,19 @@ public class RepoGeo implements RepoGeoInterface {
 		logger.trace("statusCode:{}",enResult.getStatusCode().value());
 		if (!enResult.getStatusCode().is2xxSuccessful()) {
 			logger.error("Calling service Failed, API Response Error, status:{}", enResult.getStatusCode().value());
-			throw new InternalException("Error calling geolocation search service");
+			throw new InternalException("Error calling current forecast service");
 		}
 		
-		JSONArray jaResult = null;
+		JSONObject joResult = null;
 		try {
-			jaResult = new JSONArray(enResult.getBody());
+			joResult = new JSONObject(enResult.getBody());
 		} catch (JSONException e) {
 			logger.error("Calling service Failed, Invalid json fromat, cause:", e);
-			throw new InternalException("Error calling geolocation search service");
+			throw new InternalException("Error calling current forecast service");
 		}
 		
 		logger.info("Calling service Successful");
-		return jaResult;
+		return joResult;
 	}
 	
 }

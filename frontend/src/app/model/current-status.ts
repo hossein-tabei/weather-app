@@ -3,7 +3,7 @@ import { AirQualityIndex } from "./air-quality-index";
 export interface CurrentStatus {
   city: string;		      // Oakland
 	country: string;		  // US
-	status: string;		    // Clear
+	statusId: number;     // 800: Clear
 	temperature: number;  // 19 C
 	minTemp: number;		  // 15 C
 	maxTemp: number;      // 25 C

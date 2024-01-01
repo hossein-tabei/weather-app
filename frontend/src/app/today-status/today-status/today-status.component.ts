@@ -16,7 +16,7 @@ export class TodayStatusComponent {
   constructor(private todayFacadeService: TodayFacadeService) {
     todayFacadeService.getCurrentStatus().subscribe(currentStatus => {
       this.currentStatus = currentStatus;
-      this.weatherStatus = WeatherStatusEnum.getInstanceBySymbol(currentStatus.status);
+      this.weatherStatus = WeatherStatusEnum.getInstanceBySymbol(currentStatus.statusId);
     });
   }
 

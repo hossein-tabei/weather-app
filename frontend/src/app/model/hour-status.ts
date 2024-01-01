@@ -1,6 +1,6 @@
 export interface HourStatus {
   temperature: number;// 15 C
-	status: string;		  // Clear
+	statusId: number;		  // Clear
 	windSpeed: number;	// 7.4 km/h
 	hourOfDay: string;	// 23:00
 }

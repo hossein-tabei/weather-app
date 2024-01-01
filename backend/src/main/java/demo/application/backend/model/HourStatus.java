@@ -3,14 +3,14 @@ package demo.application.backend.model;
 public class HourStatus {
 
 	private int temperature;	// 15 C
-	private String status;		// Clear
+	private int statusId;		// 800: clear sky
 	private float windSpeed;	// 7.4 km/h
 	private String hourOfDay;	// 23:00
 	
-	public HourStatus(int temperature, String status, float windSpeed, String hourOfDay) {
+	public HourStatus(int temperature, int statusId, float windSpeed, String hourOfDay) {
 		super();
 		this.temperature = temperature;
-		this.status = status;
+		this.statusId = statusId;
 		this.windSpeed = windSpeed;
 		this.hourOfDay = hourOfDay;
 	}
@@ -23,12 +23,12 @@ public class HourStatus {
 		this.temperature = temperature;
 	}
 
-	public String getStatus() {
-		return status;
+	public int getStatusId() {
+		return statusId;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setStatusId(int statusId) {
+		this.statusId = statusId;
 	}
 
 	public float getWindSpeed() {
@@ -49,7 +49,7 @@ public class HourStatus {
 
 	@Override
 	public String toString() {
-		return "HourStatus [temperature=" + temperature + ", status=" + status + ", windSpeed=" + windSpeed
+		return "HourStatus [temperature=" + temperature + ", statusId=" + statusId + ", windSpeed=" + windSpeed
 				+ ", hourOfDay=" + hourOfDay + "]";
 	}
 	

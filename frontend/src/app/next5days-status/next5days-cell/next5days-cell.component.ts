@@ -13,8 +13,8 @@ export class Next5daysCellComponent implements OnInit {
   protected maxWeatherStatus!: WeatherStatusEnum|undefined;
 
   ngOnInit(): void {
-    this.minWeatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.dayStatus.minStatus);
-    this.maxWeatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.dayStatus.maxStatus);
+    this.minWeatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.dayStatus.minStatusId);
+    this.maxWeatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.dayStatus.maxStatusId);
   }
 
 }

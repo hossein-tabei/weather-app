@@ -1,10 +1,9 @@
 package demo.application.backend.api;
 
-import java.util.List;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
 
-import demo.application.backend.api.model.ApiLocation;
 import demo.application.backend.excp.InternalException;
 
 public interface RepoGeoInterface {
-	public List<ApiLocation> searchGeo(String searchClause) throws InternalException;
+	public JSONArray searchGeo(String searchClause) throws InternalException;
 }

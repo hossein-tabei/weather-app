@@ -13,7 +13,7 @@ export class Next24hoursCellComponent implements OnInit {
   protected weatherStatus!: WeatherStatusEnum|undefined;
 
   ngOnInit(): void {
-    this.weatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.hourStatus.status);
+    this.weatherStatus = WeatherStatusEnum.getInstanceBySymbol(this.hourStatus.statusId);
   }
 
 }

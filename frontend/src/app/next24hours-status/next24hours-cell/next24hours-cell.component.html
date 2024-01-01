@@ -2,7 +2,7 @@
   <div class="mx-0 my-5 w-100">
     <div class="text-center">
       <span class="line-height-2">{{hourStatus.temperature}} °C</span><br>
-      <span class="line-height-2"><mat-icon [ngClass]="weatherStatus?.getColor()">{{weatherStatus?.getIconSymbol()}}</mat-icon></span><br>
+      <div class="text-center-compatible"><div class="small line-height-2" [ngClass]="weatherStatus?.getWeatherIcon()?.getIconClassName()"></div></div>
       <span class="line-height-2 fs-0x9em">{{hourStatus.windSpeed}} km/h</span><br>
       <span class="line-height-2 text-muted">{{hourStatus.hourOfDay}}</span><br>
     </div>

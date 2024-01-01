@@ -1,23 +1,23 @@
-package demo.application.backend.model;
+package demo.application.backend.api.model;
 
-public class CurrentStatus {
+public class ApiCurrentStatus {
 
 	private String city;		// Oakland
 	private String country;		// US
-	private int statusId;		// 800: Clear
-	private double temperature;	// 19 C
-	private double minTemp;		// 15 C
-	private double maxTemp;		// 25 C
+	private String status;		// Clear
+	private int temperature;	// 19 C
+	private int minTemp;		// 15 C
+	private int maxTemp;		// 25 C
 	private int humidity;		// 35 %
 	private int realFeel;		// 14 C
 	private int chanceOfRain;	// 10 %
 	
-	public CurrentStatus(String city, String country, int statusId, double temperature, double minTemp, double maxTemp,
+	public ApiCurrentStatus(String city, String country, String status, int temperature, int minTemp, int maxTemp,
 			int humidity, int realFeel, int chanceOfRain) {
 		
 		this.city = city;
 		this.country = country;
-		this.statusId = statusId;
+		this.status = status;
 		this.temperature = temperature;
 		this.minTemp = minTemp;
 		this.maxTemp = maxTemp;
@@ -42,35 +42,35 @@ public class CurrentStatus {
 		this.country = country;
 	}
 
-	public int getStatusId() {
-		return statusId;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public double getTemperature() {
+	public int getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(double temperature) {
+	public void setTemperature(int temperature) {
 		this.temperature = temperature;
 	}
 
-	public double getMinTemp() {
+	public int getMinTemp() {
 		return minTemp;
 	}
 
-	public void setMinTemp(double minTemp) {
+	public void setMinTemp(int minTemp) {
 		this.minTemp = minTemp;
 	}
 
-	public double getMaxTemp() {
+	public int getMaxTemp() {
 		return maxTemp;
 	}
 
-	public void setMaxTemp(double maxTemp) {
+	public void setMaxTemp(int maxTemp) {
 		this.maxTemp = maxTemp;
 	}
 
@@ -100,7 +100,7 @@ public class CurrentStatus {
 
 	@Override
 	public String toString() {
-		return "CurrentStatus [city=" + city + ", country=" + country + ", statusId=" + statusId + ", temperature="
+		return "CurrentStatus [city=" + city + ", country=" + country + ", status=" + status + ", temperature="
 				+ temperature + ", minTemp=" + minTemp + ", maxTemp=" + maxTemp + ", humidity=" + humidity
 				+ ", realFeel=" + realFeel + ", chanceOfRain=" + chanceOfRain + "]";
 	}
