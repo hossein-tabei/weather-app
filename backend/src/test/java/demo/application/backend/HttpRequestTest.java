@@ -3,9 +3,9 @@ package demo.application.backend;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -15,15 +15,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import demo.application.backend.model.AirQualityIndex;
-import demo.application.backend.model.CurrentStatus;
-import demo.application.backend.model.DayStatus;
-import demo.application.backend.model.HourStatus;
-import demo.application.backend.model.Location;
-
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class HttpRequestTest {
-
+	private Logger logger = LoggerFactory.getLogger(HttpRequestTest.class);
+	
 	@LocalServerPort private int port;
 	@Autowired private TestRestTemplate restTemplate;
 	
@@ -35,14 +30,12 @@ class HttpRequestTest {
 		        .queryParam("searchClause", "Oakland");
 		
 		// Act
-		ResponseEntity<Location[]> response = restTemplate
-				.getForEntity(builder.build().toUriString(), Location[].class);
+		ResponseEntity<String> response = restTemplate
+				.getForEntity(builder.build().toUriString(), String.class);
 		
 		// Assert
-		System.out.println("getBody,Location:"+response.getBody());
+		logger.trace("getBody,Location:"+response.getBody());
 		assertThat(response.getBody()).isNotNull();
-		
-		System.out.println("getBody:"+Arrays.asList(response.getBody()).toString());
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 	
@@ -51,18 +44,16 @@ class HttpRequestTest {
 		// Arrange
 		UriComponentsBuilder builder = UriComponentsBuilder
 				.fromHttpUrl("http://localhost:" + port + "/api/forecast/now")
-		        .queryParam("lat", "156")
-		        .queryParam("lon", "1236");
+		        .queryParam("lat", "51.507320404052734")
+		        .queryParam("lon", "-0.12764739990234375");
 		
 		// Act
-		ResponseEntity<CurrentStatus> response = restTemplate
-				.getForEntity(builder.build().toUriString(), CurrentStatus.class);
+		ResponseEntity<String> response = restTemplate
+				.getForEntity(builder.build().toUriString(), String.class);
 		
 		// Assert
-		System.out.println("getBody:"+response.getBody());
+		logger.trace("getBody,CurrentStatus:"+response.getBody());
 		assertThat(response.getBody()).isNotNull();
-		
-		System.out.println("getBody:"+response.getBody().toString());
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 	
@@ -75,14 +66,12 @@ class HttpRequestTest {
 		        .queryParam("lon", "1236");
 		
 		// Act
-		ResponseEntity<DayStatus[]> response = restTemplate
-				.getForEntity(builder.build().toUriString(), DayStatus[].class);
+		ResponseEntity<String> response = restTemplate
+				.getForEntity(builder.build().toUriString(), String.class);
 		
 		// Assert
-		System.out.println("getBody,DayStatus:"+response.getBody());
+		logger.trace("getBody,DayStatus:"+response.getBody());
 		assertThat(response.getBody()).isNotNull();
-		
-		System.out.println("getBody:"+Arrays.asList(response.getBody()).toString());
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 	
@@ -95,14 +84,12 @@ class HttpRequestTest {
 		        .queryParam("lon", "1236");
 		
 		// Act
-		ResponseEntity<HourStatus[]> response = restTemplate
-				.getForEntity(builder.build().toUriString(), HourStatus[].class);
+		ResponseEntity<String> response = restTemplate
+				.getForEntity(builder.build().toUriString(), String.class);
 		
 		// Assert
-		System.out.println("getBody,HourStatus:"+response.getBody());
+		logger.trace("getBody,HourStatus:"+response.getBody());
 		assertThat(response.getBody()).isNotNull();
-		
-		System.out.println("getBody:"+Arrays.asList(response.getBody()).toString());
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 	
@@ -115,14 +102,12 @@ class HttpRequestTest {
 		        .queryParam("lon", "1236");
 		
 		// Act
-		ResponseEntity<AirQualityIndex> response = restTemplate
-				.getForEntity(builder.build().toUriString(), AirQualityIndex.class);
+		ResponseEntity<String> response = restTemplate
+				.getForEntity(builder.build().toUriString(), String.class);
 		
 		// Assert
-		System.out.println("getBody:"+response.getBody());
+		logger.trace("getBody,AirQualityIndex:"+response.getBody());
 		assertThat(response.getBody()).isNotNull();
-		
-		System.out.println("getBody:"+response.getBody().toString());
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 }

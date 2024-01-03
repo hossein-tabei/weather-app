@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import demo.application.backend.config.AppConfig;
@@ -56,17 +57,13 @@ public class RepoForecast implements RepoForecastInterface {
 		ResponseEntity<String> enResult = null;
 		try {
 			enResult = monoResult.block();
-		} catch(Exception e) {
-			logger.error("Calling service Failed, cause:", e);
-			throw new InternalException("Internal Error");
-		} finally {
 			logger.trace("Calling: {}, result:{}",uriBuilder.build().toString(),enResult.getBody());
-		}
-		
-		logger.trace("statusCode:{}",enResult.getStatusCode().value());
-		if (!enResult.getStatusCode().is2xxSuccessful()) {
-			logger.error("Calling service Failed, API Response Error, status:{}", enResult.getStatusCode().value());
+		} catch(WebClientResponseException e) {
+			logger.error("Calling service Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
 			throw new InternalException("Error calling current forecast service");
+		} catch(Exception e) {
+			logger.error("Calling service Failed, Unhandled Exception, cause:", e);
+			throw new InternalException("Internal Error");
 		}
 		
 		JSONObject joResult = null;
