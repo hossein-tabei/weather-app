@@ -24,13 +24,15 @@ public class CtrlForecast {
 	@Autowired private SrvcForecast srvcForecast;
 	
 	@GetMapping(path = "/now", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public DTOResultWrapper<CurrentStatus> currentStatus(@RequestParam float lat, @RequestParam  float lon) throws InternalException {
+	public DTOResultWrapper<CurrentStatus> currentStatus(@RequestParam float lat, @RequestParam  float lon)
+			throws InternalException {
 		CurrentStatus fetchResult = srvcForecast.currentStatus(lat, lon);
 		return new DTOResultWrapper<CurrentStatus>("Operation Done Successfully", fetchResult);
 	}
 	
 	@GetMapping(path = "/next5days", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public DTOResultWrapper<List<DayStatus>> next5DaysForecast(@RequestParam float lat, @RequestParam  float lon) {
+	public DTOResultWrapper<List<DayStatus>> next5DaysForecast(@RequestParam float lat, @RequestParam  float lon)
+			throws InternalException {
 		List<DayStatus> fetchResult = srvcForecast.next5DaysForecast(lat, lon);
 		return new DTOResultWrapper<List<DayStatus>>("Operation Done Successfully", fetchResult);
 	}

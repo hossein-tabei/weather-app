@@ -6,12 +6,12 @@ public class DayStatus {
 	private String date;
 	private int minStatusId;	// 800: clear sky
 	private int maxStatusId;	// 804: overcast clouds
-	private int minTemp;		// 15 C
-	private int maxTemp;		// 25 C
-	private float windSpeed;	// 7.4 km/h
+	private double minTemp;		// 15 C
+	private double maxTemp;		// 25 C
+	private double windSpeed;	// 7.4 km/h
 	
-	public DayStatus(String dayOfWeek, String date, int minStatusId, int maxStatusId, int minTemp, int maxTemp,
-			float windSpeed) {
+	public DayStatus(String dayOfWeek, String date, int minStatusId, int maxStatusId, double minTemp, double maxTemp,
+			double windSpeed) {
 		
 		super();
 		this.dayOfWeek = dayOfWeek;
@@ -47,22 +47,22 @@ public class DayStatus {
 	public void setMaxStatusId(int maxStatusId) {
 		this.maxStatusId = maxStatusId;
 	}
-	public int getMinTemp() {
+	public double getMinTemp() {
 		return minTemp;
 	}
-	public void setMinTemp(int minTemp) {
+	public void setMinTemp(double minTemp) {
 		this.minTemp = minTemp;
 	}
-	public int getMaxTemp() {
+	public double getMaxTemp() {
 		return maxTemp;
 	}
-	public void setMaxTemp(int maxTemp) {
+	public void setMaxTemp(double maxTemp) {
 		this.maxTemp = maxTemp;
 	}
-	public float getWindSpeed() {
+	public double getWindSpeed() {
 		return windSpeed;
 	}
-	public void setWindSpeed(float windSpeed) {
+	public void setWindSpeed(double windSpeed) {
 		this.windSpeed = windSpeed;
 	}
 	@Override

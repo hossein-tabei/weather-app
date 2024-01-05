@@ -59,10 +59,10 @@ public class RepoGeo implements RepoGeoInterface {
 			enResult = monoResult.block();
 			logger.trace("Calling: {}, result:{}",uriBuilder.build().toString(),enResult.getBody());
 		} catch(WebClientResponseException e) {
-			logger.error("Calling service Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
-			throw new InternalException("Error calling geolocation search service");
+			logger.error("Calling searchGeo Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
+			throw new InternalException("Error calling searchGeo service");
 		} catch(Exception e) {
-			logger.error("Calling service Failed, Unhandled Exception, cause:", e);
+			logger.error("Calling searchGeo Failed, cause:", e);
 			throw new InternalException("Internal Error");
 		}
 		
@@ -71,10 +71,10 @@ public class RepoGeo implements RepoGeoInterface {
 			jaResult = new JSONArray(enResult.getBody());
 		} catch (JSONException e) {
 			logger.error("Calling service Failed, Invalid json fromat, cause:", e);
-			throw new InternalException("Error calling geolocation search service");
+			throw new InternalException("Error calling searchGeo service");
 		}
 		
-		logger.info("Calling service Successful");
+		logger.info("Calling searchGeo Successful");
 		return jaResult;
 	}
 	

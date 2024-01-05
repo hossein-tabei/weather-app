@@ -6,4 +6,5 @@ import demo.application.backend.excp.InternalException;
 
 public interface RepoForecastInterface {
 	public JSONObject currentStatus(double lat, double lon) throws InternalException;
+	public JSONObject next5DaysForecast(double lat, double lon) throws InternalException;
 }

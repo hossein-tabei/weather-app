@@ -33,14 +33,18 @@ public class SrvcForecast {
 		return JsonToModelConverter.convertJsonObjectToCurrentStatus(repoForecast.currentStatus(lat,lon));
 	}
 	
-	public List<DayStatus> next5DaysForecast(float lat, float lon) {
-		List<DayStatus> next5DayStats = new ArrayList<>();
-		next5DayStats.add(new DayStatus("Today"		, "2023/11/27", 804, 800, 6, 16, 7.4f));
-		next5DayStats.add(new DayStatus("Tomorrow"	, "2023/11/28", 804, 800, 6, 16, 7.4f));
-		next5DayStats.add(new DayStatus("Wednesday"	, "2023/11/29", 804, 800, 6, 16, 7.4f));
-		next5DayStats.add(new DayStatus("Thursday"	, "2023/11/30", 804, 800, 6, 16, 7.4f));
-		next5DayStats.add(new DayStatus("Friday"	, "2023/12/01", 804, 800, 6, 16, 7.4f));
-		return next5DayStats;
+	public List<DayStatus> next5DaysForecast(float lat, float lon) throws InternalException {
+		logger.trace("lat:{}, lon:{}",lat,lon);
+		return JsonToModelConverter.convertJsonArrayToDayStatusList(repoForecast.next5DaysForecast(lat,lon));
+		
+		
+//		List<DayStatus> next5DayStats = new ArrayList<>();
+//		next5DayStats.add(new DayStatus("Today"		, "2023/11/27", 804, 800, 6, 16, 7.4f));
+//		next5DayStats.add(new DayStatus("Tomorrow"	, "2023/11/28", 804, 800, 6, 16, 7.4f));
+//		next5DayStats.add(new DayStatus("Wednesday"	, "2023/11/29", 804, 800, 6, 16, 7.4f));
+//		next5DayStats.add(new DayStatus("Thursday"	, "2023/11/30", 804, 800, 6, 16, 7.4f));
+//		next5DayStats.add(new DayStatus("Friday"	, "2023/12/01", 804, 800, 6, 16, 7.4f));
+//		return next5DayStats;
 	}
 	
 	public List<HourStatus> next24HoursForecast(float lat, float lon) {
