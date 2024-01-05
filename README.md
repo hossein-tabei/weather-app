@@ -33,8 +33,8 @@ Back-end:
 <p>By default if no API token is embedded in the app, some mocked data are displayed.</p>
 <p>In order to apply the API to the application do the following steps:</p>
 <ol>
-	<li> Go to <a href="https://openweathermap.org/api">OpenWeather</a> and get a free API token</li>
-	<li> Create a .yml file in <code>src/main/resources</code> directory which its name is <code>application-production.yml</code></li>
+	<li> Go to <a href="https://openweathermap.org/api">OpenWeather</a> and get an API token</li>
+	<li> Create a .yml file in <code>src/main/resources</code> directory which its name is <code>application-apikey.yml</code></li>
 	<li> Add the API token to the .yml file as following:</li>
 			<code>ioConfig.apiKey: [your API token]</code>
 </ol>
