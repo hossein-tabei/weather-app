@@ -2,7 +2,7 @@ package demo.application.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.application.backend.forecast.api.controller.ForecastController;
-import demo.application.backend.forecast.service.ForecastService;
+import demo.application.backend.forecast.service.ForecastServiceImpl;
 import demo.application.backend.model.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -28,7 +28,7 @@ class CtrlForecastTest {
 
 	@Autowired private MockMvc mockMvc;
 	@Autowired private ForecastController controller;
-	@MockBean private ForecastService service;
+	@MockBean private ForecastServiceImpl service;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test

@@ -2,7 +2,7 @@ package demo.application.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import demo.application.backend.geo.api.controller.GeoController;
-import demo.application.backend.geo.service.GeoService;
+import demo.application.backend.geo.service.GeoServiceImpl;
 import demo.application.backend.model.DTOResultWrapper;
 import demo.application.backend.model.Location;
 import org.junit.jupiter.api.Test;
@@ -29,7 +29,7 @@ class CtrlGeoTest {
 
 	@Autowired private MockMvc mockMvc;
 	@Autowired private GeoController controller;
-	@MockBean private GeoService repository;
+	@MockBean private GeoServiceImpl repository;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test

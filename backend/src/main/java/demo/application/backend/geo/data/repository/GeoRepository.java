@@ -2,6 +2,8 @@ package demo.application.backend.geo.data.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import demo.application.backend.config.AppConfig;
+import demo.application.backend.excp.AppJsonProcessingException;
+import demo.application.backend.excp.UnhandledException;
 import demo.application.backend.geo.data.model.ApiLocation;
 import demo.application.backend.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -55,10 +57,10 @@ public class GeoRepository implements IGeoRepository {
 			log.trace("Calling: {}, result:{}",uriBuilder.build(), enResult.getBody());
 		} catch(WebClientResponseException e) {
 			log.error("Calling searchGeo Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
-			throw new RuntimeException("Error calling searchGeo service", e);
+			throw e;
 		} catch(Exception e) {
 			log.error("Calling searchGeo Failed, cause:", e);
-			throw new RuntimeException("Internal Error", e);
+			throw new UnhandledException("Unhandled Exception Occurred", e);
 		}
 
 		try {
@@ -66,7 +68,7 @@ public class GeoRepository implements IGeoRepository {
 			return JsonUtil.convertToPOJOList(enResult.getBody(), ApiLocation.class);
 		} catch (JsonProcessingException e) {
 			log.error("Calling service Failed, Invalid json format, cause:", e);
-			throw new RuntimeException("Error calling searchGeo service", e);
+			throw new AppJsonProcessingException("Calling searchGeo api Failed. cause: Invalid json format", e);
 		}
     }
 	

@@ -2,6 +2,8 @@ package demo.application.backend.forecast.data.repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import demo.application.backend.config.AppConfig;
+import demo.application.backend.excp.AppJsonProcessingException;
+import demo.application.backend.excp.UnhandledException;
 import demo.application.backend.forecast.data.model.ApiCurrentStatus;
 import demo.application.backend.forecast.data.model.ApiDayStatus;
 import demo.application.backend.util.JsonUtil;
@@ -45,7 +47,7 @@ public class ForecastRepository implements IForecastRepository {
 	
 	@Override
 	public ApiCurrentStatus currentStatus(double lat, double lon) {
-		log.trace("lat:{}, lon:{}",lat,lon);
+		log.debug("lat:{}, lon:{}",lat,lon);
 		
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder
 				.fromHttpUrl(HOST + CURRENT_WEATHER_PATH)
@@ -60,16 +62,16 @@ public class ForecastRepository implements IForecastRepository {
 				.retrieve()
 				.toEntity(String.class);
 			
-		ResponseEntity<String> enResult = null;
+		ResponseEntity<String> enResult;
 		try {
 			enResult = monoResult.block();
-			log.trace("Calling: {}, result:{}",uriBuilder.build(),enResult.getBody());
+			log.debug("Calling: {}, result:{}",uriBuilder.build(),enResult.getBody());
 		} catch(WebClientResponseException e) {
 			log.error("Calling currentStatus Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
-			throw new RuntimeException("Error calling currentStatus service", e);
+			throw e;
 		} catch(Exception e) {
-			log.error("Calling currentStatus Failed, cause:", e);
-			throw new RuntimeException("Internal Error", e);
+			log.error("Calling searchGeo Failed, cause:", e);
+			throw new UnhandledException("Unhandled Exception Occurred", e);
 		}
 		
 		try {
@@ -77,14 +79,14 @@ public class ForecastRepository implements IForecastRepository {
 			return JsonUtil.convertToPOJO(enResult.getBody(), ApiCurrentStatus.class);
 		} catch (JsonProcessingException e) {
 			log.error("Calling currentStatus Failed, Invalid json format, cause:", e);
-			throw new RuntimeException("Error calling currentStatus service", e);
+			throw new AppJsonProcessingException("Calling currentStatus api Failed. cause: Invalid json format", e);
         }
 
     }
 	
 	@Override
 	public ApiDayStatus next5DaysForecast(double lat, double lon) {
-		log.trace("lat:{}, lon:{}",lat,lon);
+		log.debug("lat:{}, lon:{}",lat,lon);
 		
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder
 				.fromHttpUrl(HOST + DAILY_FORECAST_PATH)
@@ -100,24 +102,24 @@ public class ForecastRepository implements IForecastRepository {
 				.retrieve()
 				.toEntity(String.class);
 			
-		ResponseEntity<String> enResult = null;
+		ResponseEntity<String> enResult;
 		try {
 			enResult = monoResult.block();
-			log.trace("Calling: {}, result:{}",uriBuilder.build(), enResult.getBody());
+			log.debug("Calling: {}, result:{}",uriBuilder.build(), enResult.getBody());
 		} catch(WebClientResponseException e) {
 			log.error("Calling next5DaysForecast Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
-			throw new RuntimeException("Error calling next5DaysForecast service", e);
+			throw e;
 		} catch(Exception e) {
 			log.error("Calling next5DaysForecast Failed, cause:", e);
-			throw new RuntimeException("Internal Error", e);
+			throw new UnhandledException("Unhandled Exception Occurred", e);
 		}
 		
 		try {
 			log.info("Calling next5DaysForecast Successful");
 			return JsonUtil.convertToPOJO(enResult.getBody(), ApiDayStatus.class);
 		} catch (JsonProcessingException e) {
-			log.error("Calling next5DaysForecast Failed, Invalid json fromat, cause:", e);
-			throw new RuntimeException("Error calling next5DaysForecast service", e);
+			log.error("Calling next5DaysForecast Failed, Invalid json format, cause:", e);
+			throw new AppJsonProcessingException("Calling next5DaysForecast api Failed. cause: Invalid json format", e);
 		}
 	}
 	
