@@ -1,14 +1,10 @@
 package demo.application.backend.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import demo.application.backend.geo.api.controller.GeoController;
+import demo.application.backend.geo.service.GeoService;
+import demo.application.backend.model.DTOResultWrapper;
+import demo.application.backend.model.Location;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +14,22 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
 
-import demo.application.backend.model.DTOResultWrapper;
-import demo.application.backend.model.Location;
-import demo.application.backend.service.SrvcGeo;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class CtrlGeoTest {
 
 	@Autowired private MockMvc mockMvc;
-	@Autowired private CtrlGeo controller;
-	@MockBean private SrvcGeo repository;
+	@Autowired private GeoController controller;
+	@MockBean private GeoService repository;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test
@@ -41,7 +40,7 @@ class CtrlGeoTest {
 	@Test
 	void assertThatSearch_Oakland_ReturnResultList() throws Exception {
 		// Arrange
-		Location mockedLocation = new Location(156, 1236, "Oakland", "California", "US");
+		Location mockedLocation = new Location(156D, 1236D, "Oakland", "California", "US");
 		List<Location> mockedLocations = new ArrayList<>();
 		mockedLocations.add(mockedLocation);
 		

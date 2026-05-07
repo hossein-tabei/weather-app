@@ -1,51 +1,47 @@
-package demo.application.backend.controller;
+package demo.application.backend.forecast.api.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import demo.application.backend.excp.InternalException;
+import demo.application.backend.model.*;
+import demo.application.backend.forecast.service.ForecastService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import demo.application.backend.excp.InternalException;
-import demo.application.backend.model.AirQualityIndex;
-import demo.application.backend.model.CurrentStatus;
-import demo.application.backend.model.DTOResultWrapper;
-import demo.application.backend.model.DayStatus;
-import demo.application.backend.model.HourStatus;
-import demo.application.backend.service.SrvcForecast;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/forecast")
-public class CtrlForecast {
+@RequiredArgsConstructor
+public class ForecastController {
 
-	@Autowired private SrvcForecast srvcForecast;
+	private final ForecastService forecastService;
 	
 	@GetMapping(path = "/now", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<CurrentStatus> currentStatus(@RequestParam float lat, @RequestParam  float lon)
 			throws InternalException {
-		CurrentStatus fetchResult = srvcForecast.currentStatus(lat, lon);
-		return new DTOResultWrapper<CurrentStatus>("Operation Done Successfully", fetchResult);
+		CurrentStatus fetchResult = forecastService.currentStatus(lat, lon);
+		return new DTOResultWrapper<>("Operation Done Successfully", fetchResult);
 	}
 	
 	@GetMapping(path = "/next5days", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<List<DayStatus>> next5DaysForecast(@RequestParam float lat, @RequestParam  float lon)
 			throws InternalException {
-		List<DayStatus> fetchResult = srvcForecast.next5DaysForecast(lat, lon);
-		return new DTOResultWrapper<List<DayStatus>>("Operation Done Successfully", fetchResult);
+		List<DayStatus> fetchResult = forecastService.next5DaysForecast(lat, lon);
+		return new DTOResultWrapper<>("Operation Done Successfully", fetchResult);
 	}
 	
 	@GetMapping(path = "/next24hours", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<List<HourStatus>> next24HoursForecast(@RequestParam float lat, @RequestParam  float lon) {
-		List<HourStatus> fetchResult = srvcForecast.next24HoursForecast(lat, lon);
+		List<HourStatus> fetchResult = forecastService.next24HoursForecast(lat, lon);
 		return new DTOResultWrapper<List<HourStatus>>("Operation Done Successfully", fetchResult);
 	}
 	
 	@GetMapping(path = "/aqi", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public DTOResultWrapper<AirQualityIndex> airQualityIndex(@RequestParam float lat, @RequestParam  float lon) {
-		AirQualityIndex fetchResult = srvcForecast.airQualityIndex(lat, lon);
+		AirQualityIndex fetchResult = forecastService.airQualityIndex(lat, lon);
 		return new DTOResultWrapper<AirQualityIndex>("Operation Done Successfully", fetchResult);
 	}
 }

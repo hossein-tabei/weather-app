@@ -1,42 +1,33 @@
-package demo.application.backend.service;
+package demo.application.backend.forecast.service;
+
+import demo.application.backend.excp.InternalException;
+import demo.application.backend.forecast.ForecastMapper;
+import demo.application.backend.forecast.data.repository.IForecastRepository;
+import demo.application.backend.model.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import demo.application.backend.api.RepoForecastInterface;
-import demo.application.backend.converter.JsonToModelConverter;
-import demo.application.backend.excp.InternalException;
-import demo.application.backend.model.AirQualityIndex;
-import demo.application.backend.model.CurrentStatus;
-import demo.application.backend.model.DayStatus;
-import demo.application.backend.model.HourStatus;
-import demo.application.backend.model.PolutionIndex;
-
 @Service
-public class SrvcForecast {
-	private Logger logger = LoggerFactory.getLogger(SrvcGeo.class);
-	
-	@Autowired
-	RepoForecastInterface repoForecast;
-	
-	public SrvcForecast(RepoForecastInterface repoForecast) {
-		logger.trace("repoForecast type:{}",repoForecast.getClass().toString());
-	}
+@Slf4j
+@RequiredArgsConstructor
+public class ForecastService {
+
+	private final IForecastRepository iForecastRepository;
+	private final ForecastMapper forecastMapper;
 	
 	public CurrentStatus currentStatus(float lat, float lon) throws InternalException {
-		logger.trace("lat:{}, lon:{}",lat,lon);
-		return JsonToModelConverter.convertJsonObjectToCurrentStatus(repoForecast.currentStatus(lat,lon));
+		log.trace("lat:{}, lon:{}",lat,lon);
+		return forecastMapper.map(iForecastRepository.currentStatus(lat,lon));
 	}
 	
 	public List<DayStatus> next5DaysForecast(float lat, float lon) throws InternalException {
-		logger.trace("lat:{}, lon:{}",lat,lon);
-		return JsonToModelConverter.convertJsonArrayToDayStatusList(repoForecast.next5DaysForecast(lat,lon));
-		
+		log.trace("lat:{}, lon:{}",lat,lon);
+		return forecastMapper.map(iForecastRepository.next5DaysForecast(lat,lon).getList());
+
 		
 //		List<DayStatus> next5DayStats = new ArrayList<>();
 //		next5DayStats.add(new DayStatus("Today"		, "2023/11/27", 804, 800, 6, 16, 7.4f));

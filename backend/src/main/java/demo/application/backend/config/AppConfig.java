@@ -1,14 +1,14 @@
 package demo.application.backend.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class AppConfig {
-	
-	@Autowired
-	private Environment env;
+
+	private final Environment env;
 	
 	public String getConfigValue(String key) {
 		return env.getProperty(key);

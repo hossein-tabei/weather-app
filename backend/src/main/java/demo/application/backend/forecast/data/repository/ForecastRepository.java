@@ -1,30 +1,24 @@
-package demo.application.backend.api;
+package demo.application.backend.forecast.data.repository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import demo.application.backend.config.AppConfig;
+import demo.application.backend.forecast.data.model.ApiCurrentStatus;
+import demo.application.backend.forecast.data.model.ApiDayStatus;
+import demo.application.backend.util.JsonUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import demo.application.backend.config.AppConfig;
-import demo.application.backend.excp.InternalException;
 import reactor.core.publisher.Mono;
 
-@Repository
 @ConditionalOnProperty(value="ioConfig.apiKey")
-public class RepoForecast implements RepoForecastInterface {
-	private Logger logger = LoggerFactory.getLogger(RepoForecast.class);
-	
-	@SuppressWarnings("unused")
-	@Autowired
-	private AppConfig appConfig;
+@Repository
+@Slf4j
+public class ForecastRepository implements IForecastRepository {
 	
 	private final String API_KEY;
 	private final String HOST;
@@ -34,7 +28,7 @@ public class RepoForecast implements RepoForecastInterface {
 	private final int DAILY_RESULT_COUNT;
 	private WebClient client;
 	
-	public RepoForecast(AppConfig appConfig) {
+	public ForecastRepository(AppConfig appConfig) {
 		API_KEY = appConfig.getConfigValue("ioConfig.apiKey");
 		HOST = appConfig.getConfigValue("ioConfig.forecast.host");
 		CURRENT_WEATHER_PATH = appConfig.getConfigValue("ioConfig.forecast.path.currentStatus");
@@ -50,8 +44,8 @@ public class RepoForecast implements RepoForecastInterface {
 	}
 	
 	@Override
-	public JSONObject currentStatus(double lat, double lon) throws InternalException {
-		logger.trace("lat:{}, lon:{}",lat,lon);
+	public ApiCurrentStatus currentStatus(double lat, double lon) {
+		log.trace("lat:{}, lon:{}",lat,lon);
 		
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder
 				.fromHttpUrl(HOST + CURRENT_WEATHER_PATH)
@@ -69,30 +63,28 @@ public class RepoForecast implements RepoForecastInterface {
 		ResponseEntity<String> enResult = null;
 		try {
 			enResult = monoResult.block();
-			logger.trace("Calling: {}, result:{}",uriBuilder.build().toString(),enResult.getBody());
+			log.trace("Calling: {}, result:{}",uriBuilder.build(),enResult.getBody());
 		} catch(WebClientResponseException e) {
-			logger.error("Calling currentStatus Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
-			throw new InternalException("Error calling currentStatus service");
+			log.error("Calling currentStatus Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
+			throw new RuntimeException("Error calling currentStatus service", e);
 		} catch(Exception e) {
-			logger.error("Calling currentStatus Failed, cause:", e);
-			throw new InternalException("Internal Error");
+			log.error("Calling currentStatus Failed, cause:", e);
+			throw new RuntimeException("Internal Error", e);
 		}
 		
-		JSONObject joResult = null;
 		try {
-			joResult = new JSONObject(enResult.getBody());
-		} catch (JSONException e) {
-			logger.error("Calling currentStatus Failed, Invalid json fromat, cause:", e);
-			throw new InternalException("Error calling currentStatus service");
-		}
-		
-		logger.info("Calling currentStatus Successful");
-		return joResult;
-	}
+			log.info("Calling currentStatus Successful");
+			return JsonUtil.convertToPOJO(enResult.getBody(), ApiCurrentStatus.class);
+		} catch (JsonProcessingException e) {
+			log.error("Calling currentStatus Failed, Invalid json format, cause:", e);
+			throw new RuntimeException("Error calling currentStatus service", e);
+        }
+
+    }
 	
 	@Override
-	public JSONObject next5DaysForecast(double lat, double lon) throws InternalException {
-		logger.trace("lat:{}, lon:{}",lat,lon);
+	public ApiDayStatus next5DaysForecast(double lat, double lon) {
+		log.trace("lat:{}, lon:{}",lat,lon);
 		
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder
 				.fromHttpUrl(HOST + DAILY_FORECAST_PATH)
@@ -111,25 +103,22 @@ public class RepoForecast implements RepoForecastInterface {
 		ResponseEntity<String> enResult = null;
 		try {
 			enResult = monoResult.block();
-			logger.trace("Calling: {}, result:{}",uriBuilder.build().toString(),enResult.getBody());
+			log.trace("Calling: {}, result:{}",uriBuilder.build(), enResult.getBody());
 		} catch(WebClientResponseException e) {
-			logger.error("Calling next5DaysForecast Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
-			throw new InternalException("Error calling next5DaysForecast service");
+			log.error("Calling next5DaysForecast Failed, API Response Error, statusCode:{}, cause:", e.getStatusCode().value(), e);
+			throw new RuntimeException("Error calling next5DaysForecast service", e);
 		} catch(Exception e) {
-			logger.error("Calling next5DaysForecast Failed, cause:", e);
-			throw new InternalException("Internal Error");
+			log.error("Calling next5DaysForecast Failed, cause:", e);
+			throw new RuntimeException("Internal Error", e);
 		}
 		
-		JSONObject joResult = null;
 		try {
-			joResult = new JSONObject(enResult.getBody());
-		} catch (JSONException e) {
-			logger.error("Calling next5DaysForecast Failed, Invalid json fromat, cause:", e);
-			throw new InternalException("Error calling next5DaysForecast service");
+			log.info("Calling next5DaysForecast Successful");
+			return JsonUtil.convertToPOJO(enResult.getBody(), ApiDayStatus.class);
+		} catch (JsonProcessingException e) {
+			log.error("Calling next5DaysForecast Failed, Invalid json fromat, cause:", e);
+			throw new RuntimeException("Error calling next5DaysForecast service", e);
 		}
-		
-		logger.info("Calling next5DaysForecast Successful");
-		return joResult;
 	}
 	
 }

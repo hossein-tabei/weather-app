@@ -1,14 +1,9 @@
 package demo.application.backend.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
+import demo.application.backend.forecast.api.controller.ForecastController;
+import demo.application.backend.forecast.service.ForecastService;
+import demo.application.backend.model.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,23 +13,22 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.List;
 
-import demo.application.backend.model.AirQualityIndex;
-import demo.application.backend.model.CurrentStatus;
-import demo.application.backend.model.DTOResultWrapper;
-import demo.application.backend.model.DayStatus;
-import demo.application.backend.model.HourStatus;
-import demo.application.backend.model.PolutionIndex;
-import demo.application.backend.service.SrvcForecast;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class CtrlForecastTest {
 
 	@Autowired private MockMvc mockMvc;
-	@Autowired private CtrlForecast controller;
-	@MockBean private SrvcForecast service;
+	@Autowired private ForecastController controller;
+	@MockBean private ForecastService service;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test
@@ -45,7 +39,7 @@ class CtrlForecastTest {
 	@Test
 	void assertThat_CurrentStatus_ReturnExpectedResultWithTheGivenInput() throws Exception {
 		// Arrange
-		CurrentStatus mockedCurrentStatus = new CurrentStatus("Oakland", "United States", 800, 19, 15, 25, 35, 14, 10);
+		CurrentStatus mockedCurrentStatus = new CurrentStatus("Oakland", "United States", 800, 19D, 15D, 25D, 35, 14, 10);
 		Mockito.doReturn(mockedCurrentStatus).when(service).currentStatus(156, 1236);
 		String expectedResult = objectMapper
 				.writeValueAsString(new DTOResultWrapper<CurrentStatus>("Operation Done Successfully", mockedCurrentStatus));
