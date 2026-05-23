@@ -1,9 +1,10 @@
 package demo.application.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import demo.application.backend.forecast.api.controller.ForecastController;
-import demo.application.backend.forecast.service.ForecastServiceImpl;
-import demo.application.backend.model.*;
+import demo.application.backend.app.dto.DTOResultWrapper;
+import demo.application.backend.app.WeatherController;
+import demo.application.backend.weather.model.*;
+import demo.application.backend.weather.repository.ForecastRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CtrlForecastTest {
 
 	@Autowired private MockMvc mockMvc;
-	@Autowired private ForecastController controller;
-	@MockBean private ForecastServiceImpl service;
+	@Autowired private WeatherController controller;
+	@MockBean private ForecastRepositoryImpl service;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test
@@ -39,10 +40,10 @@ class CtrlForecastTest {
 	@Test
 	void assertThat_CurrentStatus_ReturnExpectedResultWithTheGivenInput() throws Exception {
 		// Arrange
-		CurrentStatus mockedCurrentStatus = new CurrentStatus("Oakland", "United States", 800, 19D, 15D, 25D, 35, 14, 10);
+		CurrentWeather mockedCurrentStatus = new CurrentWeather("Oakland", "United States", 800, 19D, 15D, 25D, 35, 14, 10);
 		Mockito.doReturn(mockedCurrentStatus).when(service).currentStatus(156, 1236);
 		String expectedResult = objectMapper
-				.writeValueAsString(new DTOResultWrapper<CurrentStatus>("Operation Done Successfully", mockedCurrentStatus));
+				.writeValueAsString(new DTOResultWrapper<CurrentWeather>("Operation Done Successfully", mockedCurrentStatus));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
@@ -59,15 +60,15 @@ class CtrlForecastTest {
 	@Test
 	void assertThat_Next5DaysForecast_ReturnExpectedResultWithTheGivenInput() throws Exception {
 		// Arrange
-		List<DayStatus> mockedNext5DayStats = new ArrayList<>();
-		mockedNext5DayStats.add(new DayStatus("Today"		, "2023/11/27", 804, 800, 6, 16, 7.4f));
-		mockedNext5DayStats.add(new DayStatus("Tomorrow"	, "2023/11/28", 804, 800, 6, 16, 7.4f));
-		mockedNext5DayStats.add(new DayStatus("Wednesday"	, "2023/11/29", 804, 800, 6, 16, 7.4f));
-		mockedNext5DayStats.add(new DayStatus("Thursday"	, "2023/11/30", 804, 800, 6, 16, 7.4f));
-		mockedNext5DayStats.add(new DayStatus("Friday"		, "2023/12/01", 804, 800, 6, 16, 7.4f));
+		List<DayForecast> mockedNext5DayStats = new ArrayList<>();
+		mockedNext5DayStats.add(new DayForecast("Today"		, "2023/11/27", 804, 800, 6, 16, 7.4f));
+		mockedNext5DayStats.add(new DayForecast("Tomorrow"	, "2023/11/28", 804, 800, 6, 16, 7.4f));
+		mockedNext5DayStats.add(new DayForecast("Wednesday"	, "2023/11/29", 804, 800, 6, 16, 7.4f));
+		mockedNext5DayStats.add(new DayForecast("Thursday"	, "2023/11/30", 804, 800, 6, 16, 7.4f));
+		mockedNext5DayStats.add(new DayForecast("Friday"		, "2023/12/01", 804, 800, 6, 16, 7.4f));
 		Mockito.doReturn(mockedNext5DayStats).when(service).next5DaysForecast(156, 1236);
 		String expectedResult = objectMapper
-				.writeValueAsString(new DTOResultWrapper<List<DayStatus>>("Operation Done Successfully", mockedNext5DayStats));
+				.writeValueAsString(new DTOResultWrapper<List<DayForecast>>("Operation Done Successfully", mockedNext5DayStats));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act
@@ -84,34 +85,34 @@ class CtrlForecastTest {
 	@Test
 	void assertThat_Next24HoursForecast_ReturnExpectedResultWithTheGivenInput() throws Exception {
 		// Arrange
-		List<HourStatus> mockedNext5DayStats = new ArrayList<>();
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "Now"));
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "23:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "01:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "02:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "03:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "04:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "05:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 804, 7.4f, "06:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "07:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "08:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "09:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "10:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "11:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "12:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "13:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "14:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "15:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "16:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "17:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "18:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "19:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "20:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "21:00"));
-		mockedNext5DayStats.add(new HourStatus(14, 800, 7.4f, "22:00"));
+		List<HourForecast> mockedNext5DayStats = new ArrayList<>();
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "Now"));
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "23:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "01:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "02:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "03:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "04:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "05:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 804, 7.4f, "06:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "07:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "08:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "09:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "10:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "11:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "12:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "13:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "14:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "15:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "16:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "17:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "18:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "19:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "20:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "21:00"));
+		mockedNext5DayStats.add(new HourForecast(14, 800, 7.4f, "22:00"));
 		Mockito.doReturn(mockedNext5DayStats).when(service).next24HoursForecast(156, 1236);
 		String expectedResult = objectMapper
-				.writeValueAsString(new DTOResultWrapper<List<HourStatus>>("Operation Done Successfully", mockedNext5DayStats));
+				.writeValueAsString(new DTOResultWrapper<List<HourForecast>>("Operation Done Successfully", mockedNext5DayStats));
 		System.out.println("expectedResult:"+expectedResult);
 		
 		// Act

@@ -1,6 +1,6 @@
 package demo.application.backend.excp;
 
-import demo.application.backend.model.DTOResultWrapper;
+import demo.application.backend.app.dto.DTOResultWrapper;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

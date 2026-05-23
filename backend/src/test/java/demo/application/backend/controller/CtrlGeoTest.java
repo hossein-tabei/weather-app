@@ -1,10 +1,10 @@
 package demo.application.backend.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import demo.application.backend.geo.api.controller.GeoController;
-import demo.application.backend.geo.service.GeoServiceImpl;
-import demo.application.backend.model.DTOResultWrapper;
-import demo.application.backend.model.Location;
+import demo.application.backend.app.WeatherController;
+import demo.application.backend.app.dto.DTOResultWrapper;
+import demo.application.backend.weather.model.Location;
+import demo.application.backend.weather.repository.LocationRepositoryImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class CtrlGeoTest {
 
 	@Autowired private MockMvc mockMvc;
-	@Autowired private GeoController controller;
-	@MockBean private GeoServiceImpl repository;
+	@Autowired private WeatherController controller;
+	@MockBean private LocationRepositoryImpl repository;
 	@Autowired private ObjectMapper objectMapper;
 	
 	@Test
@@ -44,7 +44,7 @@ class CtrlGeoTest {
 		List<Location> mockedLocations = new ArrayList<>();
 		mockedLocations.add(mockedLocation);
 		
-		Mockito.doReturn(mockedLocations).when(repository).searchGeo("Oakland");
+		Mockito.doReturn(mockedLocations).when(repository).searchLocation("Oakland");
 		String expectedResult = objectMapper.writeValueAsString(new DTOResultWrapper<List<Location>>("Operation Done Successfully", mockedLocations));
 		System.out.println("expectedResult:"+expectedResult);
 		
