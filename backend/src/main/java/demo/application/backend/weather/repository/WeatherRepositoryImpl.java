@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ForecastRepositoryImpl implements ForecastRepository {
+public class WeatherRepositoryImpl implements WeatherRepository {
 
 	private final IForecastRemoteApi iForecastRemoteApi;
 	private final ForecastMapper forecastMapper;
@@ -35,18 +35,7 @@ public class ForecastRepositoryImpl implements ForecastRepository {
 		return weather;
 	}
 
-	@Override
-	public CurrentWeather currentStatus(float lat, float lon) {
-		return forecastMapper.map(iForecastRemoteApi.currentStatus(lat,lon));
-	}
-
-	@Override
-	public List<DayForecast> next5DaysForecast(float lat, float lon) {
-		return forecastMapper.map(iForecastRemoteApi.next5DaysForecast(lat,lon).getList());
-	}
-
-	@Override
-	public List<HourForecast> next24HoursForecast(float lat, float lon) {
+	private List<HourForecast> next24HoursForecast(float lat, float lon) {
 		List<HourForecast> next5DayStats = new ArrayList<>();
 		next5DayStats.add(new HourForecast(14, 804, 7.4f, "Now"));
 		next5DayStats.add(new HourForecast(14, 804, 7.4f, "23:00"));
@@ -75,8 +64,7 @@ public class ForecastRepositoryImpl implements ForecastRepository {
 		return next5DayStats;
 	}
 
-	@Override
-	public AirQualityIndex airQualityIndex(float lat, float lon) {
+	private AirQualityIndex airQualityIndex(float lat, float lon) {
 		
 		List<PolutionIndex> polutionIndexes = new ArrayList<>();
 		polutionIndexes.add(new PolutionIndex("PM2.5", 28.9f));

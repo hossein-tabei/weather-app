@@ -2,9 +2,9 @@ package demo.application.backend.weather;
 
 import demo.application.backend.infra.model.ApiCurrentStatus;
 import demo.application.backend.infra.model.ApiDayStatus;
+import demo.application.backend.util.DateTimeUtil;
 import demo.application.backend.weather.model.CurrentWeather;
 import demo.application.backend.weather.model.DayForecast;
-import demo.application.backend.util.DateTimeUtil;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -68,8 +68,4 @@ public interface ForecastMapper {
                 : null;
     }
 
-    @Named("getListFromApiDayStatus")
-    default List<ApiDayStatus.DayStatusItem> getListFromApiDayStatus(ApiDayStatus apiDayStatus) {
-        return apiDayStatus.getList();
-    }
 }
