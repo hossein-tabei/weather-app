@@ -2,8 +2,6 @@ package demo.application.backend.infra;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import demo.application.backend.config.AppConfig;
-import demo.application.backend.excp.AppJsonProcessingException;
-import demo.application.backend.excp.UnhandledException;
 import demo.application.backend.infra.model.ApiCurrentStatus;
 import demo.application.backend.infra.model.ApiDayStatus;
 import demo.application.backend.util.JsonUtil;
@@ -17,7 +15,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
-@ConditionalOnProperty(value="ioConfig.apiKey")
+@ConditionalOnProperty(value="remoteConfig.apiKey")
 @Repository
 @Slf4j
 public class ForecastRemoteApi implements IForecastRemoteApi {
@@ -30,19 +28,19 @@ public class ForecastRemoteApi implements IForecastRemoteApi {
 	private final int DAILY_RESULT_COUNT;
 	private WebClient client;
 	
-	public ForecastRemoteApi(AppConfig appConfig) {
-		API_KEY = appConfig.getConfigValue("ioConfig.apiKey");
-		HOST = appConfig.getConfigValue("ioConfig.forecast.host");
-		CURRENT_WEATHER_PATH = appConfig.getConfigValue("ioConfig.forecast.path.currentStatus");
-		DAILY_FORECAST_PATH = appConfig.getConfigValue("ioConfig.forecast.path.dailyForecast");
-		UNITS = appConfig.getConfigValue("weather.units");
+	public ForecastRemoteApi(AppConfig appConfig, WebClient client) {
+		API_KEY = appConfig.getApiKey();
+		HOST = appConfig.getHost();
+		CURRENT_WEATHER_PATH = appConfig.getCurrentWeatherPath();
+		DAILY_FORECAST_PATH = appConfig.getDailyForecastPath();
+		UNITS = appConfig.getUnits();
 		
-		String strDailyResultCount = appConfig.getConfigValue("weather.forecast.dailyCount");
+		String strDailyResultCount = appConfig.getDailyResultCount();
 		DAILY_RESULT_COUNT = strDailyResultCount != null && strDailyResultCount.matches("[0-9]+")
 								? Integer.parseInt(strDailyResultCount)
 								: 0;
 		
-		client = WebClient.create(HOST);
+		this.client = client;
 	}
 	
 	@Override

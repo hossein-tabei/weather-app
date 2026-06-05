@@ -1,9 +1,8 @@
 package demo.application.backend.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.List;
 
 public class JsonUtil {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -18,8 +17,12 @@ public class JsonUtil {
         return OBJECT_MAPPER.readValue(jsonString, targetType);
     }
 
-    public static <T> List<T> convertToPOJOList(String jsonString, Class<T> targetType) throws JsonProcessingException {
-        return OBJECT_MAPPER.readerForArrayOf(targetType).readValue(jsonString);
+    /**
+     * @param jsonString a String of json array. e.g [{"name":"name1", "age":10},{"name":"name2", "age":20}]
+     * @param targetType e.g new TypeReference<List<MyClass>>(){}
+     */
+    public static <T> T convertToPOJOList(String jsonString, TypeReference<T> targetType) throws JsonProcessingException {
+        return OBJECT_MAPPER.readValue(jsonString, targetType);
     }
 
 }

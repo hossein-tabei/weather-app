@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Location } from '../model/location';
-import { HttpForecastService } from '../services/http-forecast.service';
-import { HttpGeoService } from '../services/http-geo.service';
-import { StateService } from '../services/state.service';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Location} from '../model/location';
+import {HttpForecastService} from '../services/http-forecast.service';
+import {HttpGeoService} from '../services/http-geo.service';
+import {StateService} from '../services/state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class GeoFacadeService {
 
   searchGeo(searchClause: string): void {
     this.httpGeoService.searchGeo(searchClause)
-    .subscribe((locationList) => this.stateService.setLocationList(locationList.info));
+    .subscribe((locationList) => this.stateService.setLocationList(locationList));
   }
 
   getLocationList(): Observable<Location[]> {
@@ -27,15 +27,15 @@ export class GeoFacadeService {
     this.stateService.setSelectedLocation(location);
 
     this.httpForecastService.currentStatus(location.lat, location.lon)
-    .subscribe((currentStatus) => this.stateService.setCurrentStatus(currentStatus.info));
+    .subscribe((currentStatus) => this.stateService.setCurrentStatus(currentStatus));
 
     this.httpForecastService.next5DaysForecast(location.lat, location.lon)
-    .subscribe((dayStatusList) => this.stateService.setNext5DaysStatusList(dayStatusList.info));
+    .subscribe((dayStatusList) => this.stateService.setNext5DaysStatusList(dayStatusList));
 
     this.httpForecastService.next24HoursForecast(location.lat, location.lon)
-    .subscribe((hourStatusList) => this.stateService.setNext24HoursStatusList(hourStatusList.info));
+    .subscribe((hourStatusList) => this.stateService.setNext24HoursStatusList(hourStatusList));
 
     this.httpForecastService.airQualityIndex(location.lat, location.lon)
-    .subscribe((airQualityIndex) => this.stateService.setAirQualityIndex(airQualityIndex.info));
+    .subscribe((airQualityIndex) => this.stateService.setAirQualityIndex(airQualityIndex));
   }
 }

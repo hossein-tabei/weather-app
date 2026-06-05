@@ -4,5 +4,5 @@ import demo.application.backend.weather.model.Weather;
 
 public interface WeatherRepository {
 
-	Weather getWeatherByLocation(float lat, float lon);
+	Weather getWeatherByLocation(double lat, double lon);
 }

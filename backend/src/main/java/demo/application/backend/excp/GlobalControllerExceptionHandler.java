@@ -1,6 +1,10 @@
 package demo.application.backend.excp;
 
-import demo.application.backend.app.dto.DTOResultWrapper;
+import com.google.gson.JsonObject;
+import demo.application.backend.infra.AppJsonProcessingException;
+import demo.application.backend.infra.UnhandledException;
+import demo.application.backend.weather.repository.NotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,23 +19,46 @@ public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHan
 	
 	@ExceptionHandler({WebClientResponseException.class})
 	protected ResponseEntity<Object> handleRemoteApiCallException(WebClientResponseException ex, WebRequest request) {
-		DTOResultWrapper<Object> result = new DTOResultWrapper<>(ex.getMessage(), null);
-		return handleExceptionInternal(ex, result, new HttpHeaders(), ex.getStatusCode(), request);
+		JsonObject joError = new JsonObject();
+		joError.addProperty("status", ex.getStatusCode().value());
+		joError.addProperty("message", ex.getMessage());
+		return handleExceptionInternal(ex, joError.toString(), new HttpHeaders(), ex.getStatusCode(), request);
 	}
 
 	@ExceptionHandler({AppJsonProcessingException.class})
 	protected ResponseEntity<Object> handleJsonProcessingException(AppJsonProcessingException ex, WebRequest request) {
-		return handleInternalException(ex, request);
+		return handleServerException(ex, request);
 	}
 
 	@ExceptionHandler({UnhandledException.class})
 	protected ResponseEntity<Object> handleJsonProcessingException(UnhandledException ex, WebRequest request) {
-		return handleInternalException(ex, request);
+		return handleServerException(ex, request);
 	}
 
-	private ResponseEntity<Object> handleInternalException(RuntimeException ex, WebRequest request) {
-		DTOResultWrapper<Object> result = new DTOResultWrapper<>(ex.getMessage(), null);
-		return handleExceptionInternal(ex, result, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	@ExceptionHandler({NotFoundException.class})
+	protected ResponseEntity<Object> handleClientException(NotFoundException ex, WebRequest request) {
+		return handleClientException(ex, HttpStatus.NOT_FOUND, request);
 	}
+
+	@ExceptionHandler({ConstraintViolationException.class})
+	protected ResponseEntity<Object> handleInputValidationException(ConstraintViolationException ex, WebRequest request) {
+		return handleClientException(ex, HttpStatus.BAD_REQUEST, request);
+	}
+
+	private ResponseEntity<Object> handleServerException(RuntimeException ex, WebRequest request) {
+		JsonObject joError = new JsonObject();
+		joError.addProperty("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+		joError.addProperty("message", ex.getMessage());
+		return handleExceptionInternal(ex, joError.toString(), new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+
+	private ResponseEntity<Object> handleClientException(RuntimeException ex, HttpStatus httpStatus, WebRequest request) {
+		JsonObject joError = new JsonObject();
+		joError.addProperty("status", httpStatus.value());
+		joError.addProperty("message", ex.getMessage());
+		return handleExceptionInternal(ex, joError.toString(), new HttpHeaders(), httpStatus, request);
+	}
+
+
 	
 }

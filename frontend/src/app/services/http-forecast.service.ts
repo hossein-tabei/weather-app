@@ -5,7 +5,7 @@ import {CurrentStatus} from '../model/current-status';
 import {DayStatus} from '../model/day-status';
 import {HourStatus} from '../model/hour-status';
 import {AirQualityIndex} from '../model/air-quality-index';
-import {DTOResultWrapper} from '../model/dto-result-wrapper';
+import {ServerError} from '../model/server-error';
 
 
 @Injectable({
@@ -19,23 +19,23 @@ export class HttpForecastService {
 
   constructor(private http: HttpClient) {}
 
-  currentStatus(latitude: number, longitude: number): Observable<DTOResultWrapper<CurrentStatus>> {
+  currentStatus(latitude: number, longitude: number): Observable<CurrentStatus> {
     let queryParams = new HttpParams().append('lat', latitude).append('lon', longitude);
-    return this.http.get<DTOResultWrapper<CurrentStatus>>(this.PATH_WEATHER_NOW, {params: queryParams});
+    return this.http.get<CurrentStatus>(this.PATH_WEATHER_NOW, {params: queryParams});
   }
 
-  next5DaysForecast(latitude: number, longitude: number): Observable<DTOResultWrapper<DayStatus[]>> {
+  next5DaysForecast(latitude: number, longitude: number): Observable<DayStatus[]> {
     let queryParams = new HttpParams().append('lat', latitude).append('lon', longitude);
-    return this.http.get<DTOResultWrapper<DayStatus[]>>(this.PATH_FORECAST_NEXT5DAYS, {params: queryParams});
+    return this.http.get<DayStatus[]>(this.PATH_FORECAST_NEXT5DAYS, {params: queryParams});
   }
 
-  next24HoursForecast(latitude: number, longitude: number): Observable<DTOResultWrapper<HourStatus[]>> {
+  next24HoursForecast(latitude: number, longitude: number): Observable<HourStatus[]> {
     let queryParams = new HttpParams().append('lat', latitude).append('lon', longitude);
-    return this.http.get<DTOResultWrapper<HourStatus[]>>(this.PATH_FORECAST_NEXT24HOURS, {params: queryParams});
+    return this.http.get<HourStatus[]>(this.PATH_FORECAST_NEXT24HOURS, {params: queryParams});
   }
 
-  airQualityIndex(latitude: number, longitude: number): Observable<DTOResultWrapper<AirQualityIndex>> {
+  airQualityIndex(latitude: number, longitude: number): Observable<AirQualityIndex> {
     let queryParams = new HttpParams().append('lat', latitude).append('lon', longitude);
-    return this.http.get<DTOResultWrapper<AirQualityIndex>>(this.PATH_WEATHER_AQI, {params: queryParams});
+    return this.http.get<AirQualityIndex>(this.PATH_WEATHER_AQI, {params: queryParams});
   }
 }

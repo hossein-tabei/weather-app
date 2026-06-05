@@ -7,5 +7,5 @@ import java.util.List;
 public interface LocationRepository {
 
 	List<Location> searchLocation(String searchClause);
-	Location findLocation(float lat, float lon);
+	Location findLocation(double lat, double lon);
 }

@@ -15,13 +15,12 @@ logging:
     '[reactor]': info
     '[io.netty]': info
     
-ioConfig:
+remoteConfig:
+  host: 'http://api.openweathermap.org'
   geo:
-    host: 'http://api.openweathermap.org'
     path:
       searchGeo: '/geo/1.0/direct'
   forecast:
-    host: 'http://api.openweathermap.org'
     path:
       currentStatus: '/data/2.5/weather'
       dailyForecast: '/data/2.5/forecast/daily'

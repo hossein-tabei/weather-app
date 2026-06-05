@@ -1,6 +1,8 @@
 package demo.application.backend.infra.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -13,11 +15,15 @@ public class ApiCurrentStatus {
 	private Main main;
 
 	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
 	public static class Sys {
 		private String country;		// US
 	}
 
 	@Data
+	@AllArgsConstructor
+	@NoArgsConstructor
 	public static class WeatherItem {
 		private Integer id;		// status: Clear
 	}

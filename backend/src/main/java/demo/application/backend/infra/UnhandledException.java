@@ -1,4 +1,4 @@
-package demo.application.backend.excp;
+package demo.application.backend.infra;
 
 public class UnhandledException extends RuntimeException {
 

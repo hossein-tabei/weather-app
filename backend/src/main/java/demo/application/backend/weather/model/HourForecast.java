@@ -2,9 +2,11 @@ package demo.application.backend.weather.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class HourForecast {
 
 	private int temperature;	// 15 C

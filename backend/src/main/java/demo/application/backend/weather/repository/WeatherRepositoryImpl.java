@@ -18,7 +18,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 	private final LocationRepository locationRepository;
 
 	@Override
-	public Weather getWeatherByLocation(float lat, float lon) {
+	public Weather getWeatherByLocation(double lat, double lon) {
 
 		Location location = locationRepository.findLocation(lat, lon);
 		CurrentWeather currentWeather = forecastMapper.map(iForecastRemoteApi.currentStatus(lat,lon));
@@ -35,10 +35,10 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 		return weather;
 	}
 
-	private List<HourForecast> next24HoursForecast(float lat, float lon) {
+	private List<HourForecast> next24HoursForecast(double lat, double lon) {
 		List<HourForecast> next5DayStats = new ArrayList<>();
 		next5DayStats.add(new HourForecast(14, 804, 7.4f, "Now"));
-		next5DayStats.add(new HourForecast(14, 804, 7.4f, "23:00"));
+		next5DayStats.add(new HourForecast(14, 804, 7.4f, "00:00"));
 		next5DayStats.add(new HourForecast(14, 804, 7.4f, "01:00"));
 		next5DayStats.add(new HourForecast(14, 804, 7.4f, "02:00"));
 		next5DayStats.add(new HourForecast(14, 804, 7.4f, "03:00"));
@@ -64,7 +64,7 @@ public class WeatherRepositoryImpl implements WeatherRepository {
 		return next5DayStats;
 	}
 
-	private AirQualityIndex airQualityIndex(float lat, float lon) {
+	private AirQualityIndex airQualityIndex(double lat, double lon) {
 		
 		List<PolutionIndex> polutionIndexes = new ArrayList<>();
 		polutionIndexes.add(new PolutionIndex("PM2.5", 28.9f));

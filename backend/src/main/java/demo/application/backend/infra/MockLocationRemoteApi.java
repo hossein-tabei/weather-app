@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * The instance of this class is being used when 'apiKey' property is not present in the application config.
@@ -24,8 +25,8 @@ public class MockLocationRemoteApi implements ILocationRemoteApi {
 			createApiLocation("Houston", new HashMap<>(), 158, 1238, "US", "Texas")
 	);
 
-	public List<ApiLocation> searchGeo(String searchClause) {
-		log.trace("searchClause:{}", searchClause);
+	public List<ApiLocation> searchLocation(String searchTerm) {
+		log.trace("searchTerm:{}", searchTerm);
 		log.info("Getting: Mock Data, result:{}", mockedLocations);
 		return mockedLocations;
 	}
@@ -42,10 +43,10 @@ public class MockLocationRemoteApi implements ILocationRemoteApi {
 		return apiLocation;
 	}
 
-	public ApiLocation findLocation(float lat, float lon) {
+	public Optional<ApiLocation> findLocation(double lat, double lon) {
 		return mockedLocations.stream()
 				.filter(location -> location.getLat() == lat && location.getLon() == lon)
-				.findFirst().orElseGet(null);
+				.findFirst();
 	}
 	
 }
