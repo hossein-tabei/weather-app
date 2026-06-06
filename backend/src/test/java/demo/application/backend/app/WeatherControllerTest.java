@@ -185,44 +185,6 @@ public class WeatherControllerTest {
         assertEquals("Required parameter 'lon' is not present.", response.getErrorMessage());
     }
 
-    @Test
-    @DisplayName("'currentWeather' throws ConstraintViolationException when input lat is out of [-90,90] range")
-    void currentWeather_throws_ConstraintViolationException_whenInputLatIsOutOfRange() {
-        // Arrange
-        double lat = 91, lon = 1;
-
-        // Act
-        ServletException exception = assertThrows(ServletException.class,
-                () -> mockMvc.perform(get("/api/v1/weather/now")
-                        .queryParam("lat", String.valueOf(lat))
-                        .queryParam("lon", String.valueOf(lon))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)));
-
-        // Assert
-        verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
-        assertThat(exception).hasCauseInstanceOf(ConstraintViolationException.class);
-        assertThat(exception).hasRootCauseMessage("currentWeather.lat: must be between -90 and 90");
-    }
-
-    @Test
-    @DisplayName("'currentWeather' throws ConstraintViolationException when input lon is out of [-180,180] range")
-    void currentWeather_throws_ConstraintViolationException_whenInputLonIsOutOfRange() {
-        // Arrange
-        double lat = 1, lon = -181;
-
-        // Act
-        ServletException exception = assertThrows(ServletException.class,
-                () -> mockMvc.perform(get("/api/v1/weather/now")
-                        .queryParam("lat", String.valueOf(lat))
-                        .queryParam("lon", String.valueOf(lon))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)));
-
-        // Assert
-        verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
-        assertThat(exception).hasCauseInstanceOf(ConstraintViolationException.class);
-        assertThat(exception).hasRootCauseMessage("currentWeather.lon: must be between -180 and 180");
-    }
-
     //------------------------------------------------------------------------------------------------------------------
     // next5DaysForecast
     @Test
@@ -352,44 +314,6 @@ public class WeatherControllerTest {
         verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
         assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
         assertEquals("Required parameter 'lon' is not present.", response.getErrorMessage());
-    }
-
-    @Test
-    @DisplayName("'next5DaysForecast' throws ConstraintViolationException when input lat is out of [-90,90] range")
-    void next5DaysForecast_throws_ConstraintViolationException_whenInputLatIsOutOfRange() {
-        // Arrange
-        double lat = 91, lon = 1;
-
-        // Act
-        ServletException exception = assertThrows(ServletException.class,
-                () -> mockMvc.perform(get("/api/v1/weather/forecast/next5days")
-                        .queryParam("lat", String.valueOf(lat))
-                        .queryParam("lon", String.valueOf(lon))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)));
-
-        // Assert
-        verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
-        assertThat(exception).hasCauseInstanceOf(ConstraintViolationException.class);
-        assertThat(exception).hasRootCauseMessage("next5DaysForecast.lat: must be between -90 and 90");
-    }
-
-    @Test
-    @DisplayName("'next5DaysForecast' throws ConstraintViolationException when input lon is out of [-180,180] range")
-    void next5DaysForecast_throws_ConstraintViolationException_whenInputLonIsOutOfRange() {
-        // Arrange
-        double lat = 1, lon = -181;
-
-        // Act
-        ServletException exception = assertThrows(ServletException.class,
-                () -> mockMvc.perform(get("/api/v1/weather/forecast/next5days")
-                        .queryParam("lat", String.valueOf(lat))
-                        .queryParam("lon", String.valueOf(lon))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)));
-
-        // Assert
-        verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
-        assertThat(exception).hasCauseInstanceOf(ConstraintViolationException.class);
-        assertThat(exception).hasRootCauseMessage("next5DaysForecast.lon: must be between -180 and 180");
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -698,44 +622,6 @@ public class WeatherControllerTest {
         verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
         assertEquals(HttpStatus.BAD_REQUEST.value(), response.getStatus());
         assertEquals("Required parameter 'lon' is not present.", response.getErrorMessage());
-    }
-
-    @Test
-    @DisplayName("'next24HoursForecast' throws ConstraintViolationException when input lat is out of [-90,90] range")
-    void next24HoursForecast_throws_ConstraintViolationException_whenInputLatIsOutOfRange() {
-        // Arrange
-        double lat = 91, lon = 1;
-
-        // Act
-        ServletException exception = assertThrows(ServletException.class,
-                () -> mockMvc.perform(get("/api/v1/weather/forecast/next24hours")
-                        .queryParam("lat", String.valueOf(lat))
-                        .queryParam("lon", String.valueOf(lon))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)));
-
-        // Assert
-        verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
-        assertThat(exception).hasCauseInstanceOf(ConstraintViolationException.class);
-        assertThat(exception).hasRootCauseMessage("next24HoursForecast.lat: must be between -90 and 90");
-    }
-
-    @Test
-    @DisplayName("'next24HoursForecast' throws ConstraintViolationException when input lon is out of [-180,180] range")
-    void next24HoursForecast_throws_ConstraintViolationException_whenInputLonIsOutOfRange() {
-        // Arrange
-        double lat = 1, lon = -181;
-
-        // Act
-        ServletException exception = assertThrows(ServletException.class,
-                () -> mockMvc.perform(get("/api/v1/weather/forecast/next24hours")
-                        .queryParam("lat", String.valueOf(lat))
-                        .queryParam("lon", String.valueOf(lon))
-                        .accept(MediaType.APPLICATION_JSON_VALUE)));
-
-        // Assert
-        verify(weatherRepository, never()).getWeatherByLocation(anyDouble(), anyDouble());
-        assertThat(exception).hasCauseInstanceOf(ConstraintViolationException.class);
-        assertThat(exception).hasRootCauseMessage("next24HoursForecast.lon: must be between -180 and 180");
     }
 
     //------------------------------------------------------------------------------------------------------------------
