@@ -1,7 +1,7 @@
 spring.profiles.active: apiKey
 
 server:
-  port: 808
+  port: 8080
   
 logging:
   level:

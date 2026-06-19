@@ -1,0 +1,8 @@
+name: weather-app
+
+services:
+  server:
+    build:
+      context: .
+    ports:
+      - 8080:8080
